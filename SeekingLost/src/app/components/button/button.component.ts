@@ -9,6 +9,7 @@ import { ButtonColor } from '../../class/ButtonColor';
 export class ButtonComponent {
   @Input() buttonText?: string = "Default";
   @Input() buttonColor?: string = "#FFF";
+  @Input() textColor?: string = "#FFF";
   availableColors: ButtonColor[] = []
 
   constructor() { }

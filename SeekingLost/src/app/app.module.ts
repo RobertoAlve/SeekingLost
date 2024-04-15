@@ -3,7 +3,8 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ButtonModule } from './components/button/button.module';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { LoginModule } from './pages/login/login.module';
 
 @NgModule({
   declarations: [
@@ -12,10 +13,11 @@ import { ButtonModule } from './components/button/button.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ButtonModule
+    LoginModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })
