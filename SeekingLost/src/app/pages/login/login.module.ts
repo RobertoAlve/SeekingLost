@@ -6,7 +6,6 @@ import { InputModule } from '../../components/input/input.module';
 import { LogoModule } from '../../components/logo/logo.module';
 
 
-
 @NgModule({
   declarations: [
     LoginComponent
