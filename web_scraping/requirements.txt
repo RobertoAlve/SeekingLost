@@ -1,3 +1,6 @@
 tqdm
-ipykernel
+boto3
+requests
 cinemagoer
+opencv-python
+beautifulsoup4

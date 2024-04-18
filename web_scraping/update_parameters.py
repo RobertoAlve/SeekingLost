@@ -1,5 +1,5 @@
 import json
-import json
+import boto3
 from tqdm import tqdm
 from imdb import Cinemagoer
 
@@ -26,8 +26,12 @@ def main(im:Cinemagoer, list_actors:list)->None:
 
             pass
 
-    with open('parameters.json', "a") as arquivo:
+    with open('parameters_crawler.json', "a") as arquivo:
         json.dump(actors_info, arquivo)
+
+    s3 = boto3.client("s3")
+    bucket_name = "testaaaaapapepipo"
+    s3.upload_file("parameters/parameters_crawler.json", bucket_name, "parameters_crawler.json")
 
 
 if __name__ == '__main__':
