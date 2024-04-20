@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
 import { ButtonModule } from '../../components/button/button.module';
 import { InputModule } from '../../components/input/input.module';
-
+import { LogoModule } from '../../components/logo/logo.module';
 
 
 @NgModule({
@@ -13,7 +13,8 @@ import { InputModule } from '../../components/input/input.module';
   imports: [
     CommonModule,
     ButtonModule,
-    InputModule
+    InputModule,
+    LogoModule
   ],
   exports: [
     LoginComponent

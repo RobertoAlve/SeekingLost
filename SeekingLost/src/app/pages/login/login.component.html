@@ -1,6 +1,6 @@
 <div class="main-container">
     <div class="login-header">
-        <h1><p>S</p>eeking<p>L</p>oost</h1>
+        <app-logo></app-logo>
         <div class="register-user">Novo usuario?<p>Cadastre-se</p></div>
     </div>
     <div class="division-container">
@@ -17,7 +17,7 @@
                 <app-input inputName="password" inputType="password" iconName="lock" [value]="password" [width]="inputWidth"></app-input>
             </div>
             <div class="login-buttons">
-                <app-button buttonColor="purple" buttonText="Login"></app-button>
+                <app-button (click)="login()" buttonColor="purple" buttonText="Login"></app-button>
                 <app-button textColor="#B4B4B4" buttonText="Esqueceu a senha?"></app-button>
             </div>
         </div>

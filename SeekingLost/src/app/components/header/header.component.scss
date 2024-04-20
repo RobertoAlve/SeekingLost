@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+   width: 100vw; 
+   height: 106px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+header ul {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+header ul li {
+    font-size: 18px;
+    font-weight: bold;
+    list-style: none;
+    cursor: pointer;
+}
+
+header ul li:hover {
+    color: #7B6CDB;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.active {
+    color: #7B6CDB !important;
+}

@@ -1,0 +1,68 @@
+<main>
+    <div class="container-main">
+        <h1>Novo Cadastro</h1>
+        <div class="container-form-register">
+            <div class="steps-register">
+                <div class="title">
+                    <div class="circle" [ngClass]="{'active': getFormProgress() > 30}"></div>
+                    Prencha as informações
+                </div>
+                <div class="steps-conclusion">
+                    <div class="circle" [ngClass]="{'active': getFormProgress() > 30}"></div>
+                    <div class="circle" [ngClass]="{'active': getFormProgress() > 60}"></div>
+                    <div class="circle" [ngClass]="{'active': getFormProgress() > 99}"></div>
+                </div>
+                <div class="title">                    
+                    <div class="circle" [ngClass]="{'active': hasImagesForUp}"></div>
+                    Suba as imagens
+                </div>
+            </div>
+            <div class="form-side" *ngIf="!importImage; else importImages">
+                <form [formGroup]="registerForm" action="">
+                    <div class="input">
+                        <p>Nome</p>
+                        <input id="firstName" formControlName="firstName" type="text">
+                        <div class="detailed-input" *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.errors?.['required']">O campo Nome é requerido!</div>
+                    </div>
+                    <div class="input">
+                        <p>Sobrenome</p>
+                        <input id="lastName" formControlName="lastName" type="text">
+                        <div class="detailed-input" *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.errors?.['required']">O campo Sobrenome é requerido!</div>
+                    </div>
+                    <div class="input">
+                        <p>Data de Nascimento</p>
+                        <input id="birthDay" formControlName="birthDay"  type="date">
+                        <div class="detailed-input" *ngIf="registerForm.get('birthDay')?.touched && registerForm.get('birthDay')?.errors?.['required']">O campo Data de Nascimento é requerido!</div>
+                    </div>
+                </form>
+                <div class="buttons-form">
+                    <app-button (click)="cancelRegister()" buttonText="Cancelar" textColor="#BDBCBC"></app-button>
+                    <app-button [isDisabled]="!registerForm.valid" (click)="registerPeople()" buttonText="Avançar" buttonColor="#7B6CDB"></app-button>
+                </div>
+            </div>
+        </div>
+        <ng-template #importImages>
+            <div class="form-side">
+                <div id="drop-area" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+                    <div class="main-import-images">
+                        <div class="icon-import">
+                            <mat-icon>cloud_upload</mat-icon>
+                            <p>Arraste e solte as imagens</p>
+                            <button class="import-button" (click)="triggerInput()">Importar</button>
+                        </div>
+                        <div class="list-files">
+                            <ul>
+                                <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <input type="file" id="file-input" accept="image/*" multiple style="display: none;" (change)="onFilesSelected($event)" />
+                </div>
+                <div class="buttons-form">
+                    <app-button (click)="cancelRegister()" buttonText="Cancelar" textColor="#BDBCBC"></app-button>
+                    <app-button buttonText="Finalizar" buttonColor="#7B6CDB" buttonType="submit"></app-button>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</main>

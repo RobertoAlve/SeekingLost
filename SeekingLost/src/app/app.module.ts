@@ -3,8 +3,12 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { LoginModule } from './pages/login/login.module';
+import { RegisterLostPeopleModule } from './pages/register-lost-people/register-lost-people.module';
+import { HeaderModule } from './components/header/header.module';
+import { FooterModule } from './components/footer/footer.module';
+import { FormRegisterPeopleModule } from './pages/form-register-people/form-register-people.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -13,11 +17,15 @@ import { LoginModule } from './pages/login/login.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LoginModule
+    LoginModule,
+    RegisterLostPeopleModule,
+    FormRegisterPeopleModule,
+    HeaderModule,
+    FooterModule,
+    HttpClientModule
   ],
   providers: [
     provideClientHydration(),
-    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

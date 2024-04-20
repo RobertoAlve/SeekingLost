@@ -1,0 +1,37 @@
+.main-container {
+    width: 108px;
+    height: 120px;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.image-people {
+    width: 78%;
+    height: 94%;
+    border-radius: 16px;
+    background-size: cover;
+}
+
+.image-people:hover {
+    width: 80%;
+    height: 94%;
+}
+
+.add-people {
+    width: 100%;
+    color: #fff;
+    height: 100%;
+    display: flex;
+    font-size: 48px;
+    align-items: center;
+    justify-content: center;
+}
+
+p {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
