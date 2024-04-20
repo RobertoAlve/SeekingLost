@@ -23,3 +23,10 @@ button {
 button:hover {
     box-shadow: 2px 4px 6px #0000006c;
 }
+
+button:disabled {
+  background-color: #6c757d !important;
+  color: #adb5bd !important;
+  cursor: not-allowed;
+  box-shadow: none;
+}

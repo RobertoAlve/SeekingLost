@@ -1,9 +1,9 @@
-<header>
+<header *ngIf="shouldShowHeader()">
     <ul>
-        <li>Home</li>
-        <li>Cadastrar</li>
+        <li><a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
+        <li><a routerLink="/register-lost-people" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Cadastrar</a></li>
         <li><app-logo></app-logo></li>
-        <li>Sobre</li>
-        <li>Sair</li>
+        <li><a routerLink="/about" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Sobre</a></li>
+        <li><a routerLink="/logout" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Sair</a></li>
     </ul>
 </header>
