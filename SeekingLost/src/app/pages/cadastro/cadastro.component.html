@@ -1,0 +1,24 @@
+<div class="main-container">
+    <div class="sign-header">
+        <app-logo></app-logo>
+        <div class="login-user">Já possiu cadastro?<b>.</b><p (click)="signup()">Faça o Login</p></div>
+    </div>
+    <div class="divider-container">
+        <div class="forms-sign-up-user">
+            <h1>Insira as informações...</h1>
+            <div class="forms-inputs">
+                <app-input inputName="email" inputType="email" iconName="person" [value]="email" [width]="inputWidth"></app-input>
+                <app-input inputName="password" inputType="password" iconName="lock" [value]="password" [width]="inputWidth"></app-input>
+                <app-input inputName="password" inputType="password" iconName="lock" [value]="password" [width]="inputWidth"></app-input>
+            </div>
+            <div class="forms-buttons">
+                <app-button (click)="signup()" buttonColor="purple" buttonText="Cadastrar"></app-button>
+            </div>
+            <div class="forms-google-login">
+                <p>Acesse com:</p>
+                <img src="../../../assets/images/Google Login.png" alt="">
+            </div>
+        </div>
+        <img src="../../../assets/images/undraw_sign_up_n6im 1.svg" alt="">
+    </div>
+</div>
