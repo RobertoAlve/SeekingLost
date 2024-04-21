@@ -11,6 +11,7 @@ import { HeaderModule } from './components/header/header.module';
 import { FooterModule } from './components/footer/footer.module';
 import { FormRegisterPeopleModule } from './pages/form-register-people/form-register-people.module';
 import { HttpClientModule } from '@angular/common/http';
+import { AboutModule } from './pages/about/about.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     LoginModule,
     CadastroModule,
     HomeModule,
+    AboutModule,
     RegisterLostPeopleModule,
     FormRegisterPeopleModule,
     HeaderModule,
