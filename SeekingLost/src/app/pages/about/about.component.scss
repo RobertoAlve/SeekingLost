@@ -1,0 +1,48 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 2%;
+}
+
+.divider-container {
+    width: 80%;
+    height: 81.9vh;
+
+    display: flex;
+    flex-direction: column;
+
+    .title-about {
+        h1 {
+            color: #7B6CDB;
+            font-weight: bold;
+            font-size: 28px;
+
+            padding-bottom: 3.5%;
+        }
+    }
+
+    .text-about {
+        text-align: center;
+
+        p {
+            font-weight: bold;
+            font-size: 28px;
+
+            line-height: 100%;
+
+            padding-bottom: 2.5%;
+        }
+    }
+
+    .img-about {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 40%;
+        }
+    }
+}
