@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginModule } from './pages/login/login.module';
 import { CadastroModule } from './pages/cadastro/cadastro.module';
+import { HomeModule } from './pages/home/home.module';
 import { RegisterLostPeopleModule } from './pages/register-lost-people/register-lost-people.module';
 import { HeaderModule } from './components/header/header.module';
 import { FooterModule } from './components/footer/footer.module';
@@ -20,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     LoginModule,
     CadastroModule,
+    HomeModule,
     RegisterLostPeopleModule,
     FormRegisterPeopleModule,
     HeaderModule,
