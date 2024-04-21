@@ -1,0 +1,105 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.100.0.0/16
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.100.1.0/24
+      AvailabilityZone: us-east-1a
+
+  # PrivateSubnet:
+  #   Type: AWS::EC2::Subnet
+  #   Properties:
+  #     VpcId: !Ref VPC
+  #     CidrBlock: 10.100.2.0/24
+  #     AvailabilityZone: us-east-1b
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  AttachInternetGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+
+  RouteTableInternetGateway:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGateway
+    Properties: 
+      RouteTableId: !Ref RouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  VPCAssociationPublicSubnet:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref RouteTable
+      SubnetId: !Ref PublicSubnet
+
+  BucketDadostreinoRaw:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: seekinglost-dados-treino-raw
+
+  BucketDadosTreinoProcessed:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: seekinglost-dados-treino-processed
+
+  BucketModelos:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: seekinglost-modelos
+
+  BucketValidacaoModelo:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: seekinglost-validacao-modelo
+  
+  SGInstanceDB:
+    DependsOn: VPC
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Database Machine, allow ports 22 and 3306
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: '3306'
+          ToPort: '3306'
+          CidrIp: 0.0.0.0/0
+      VpcId: !Ref VPC
+
+  InstanceDB:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-080e1f13689e07408
+      InstanceType: t3.medium
+      SubnetId: !Ref PublicSubnet
+      SecurityGroupIds: 
+        - !Ref SGInstanceDB
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo apt update
+          sudo apt install mysql-server -y
+          sudo systemctl start mysql.service
+
+#aws ec2 describe-key-pairs --key-names key-database --include-public-key
