@@ -6,10 +6,10 @@
     <div class="divider-container">
         <div class="forms-sign-up-user">
             <h1>Insira as informações...</h1>
-            <div class="forms-inputs">
-                <app-input inputName="email" inputType="email" iconName="person" [value]="email" [width]="inputWidth"></app-input>
-                <app-input inputName="password" inputType="password" iconName="lock" [value]="password" [width]="inputWidth"></app-input>
-                <app-input inputName="password" inputType="password" iconName="lock" [value]="password" [width]="inputWidth"></app-input>
+            <div class="forms-inputs" [formGroup]="signupForm">
+                <app-input formControlName="username" inputName="email" inputType="email" iconName="person" [width]="inputWidth"></app-input>
+                <app-input formControlName="password" inputName="password" inputType="password" iconName="lock" [width]="inputWidth"></app-input>
+                <app-input formControlName="confirmedPassword" inputName="password" inputType="password" iconName="lock" [width]="inputWidth"></app-input>
             </div>
             <div class="forms-buttons">
                 <app-button (click)="signup()" buttonColor="purple" buttonText="Cadastrar"></app-button>
