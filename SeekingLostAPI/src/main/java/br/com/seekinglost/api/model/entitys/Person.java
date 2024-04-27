@@ -23,9 +23,7 @@ public class Person {
     private Date birthday;
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "fk_user", referencedColumnName = "username")
-    })
+    @JoinColumn(name = "fk_user")
     private User user;
 
 }

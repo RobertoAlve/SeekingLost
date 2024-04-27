@@ -1,2 +1,7 @@
-package br.com.seekinglost.api.interfaces;public interface IResponseEnum {
+package br.com.seekinglost.api.interfaces;
+
+public interface IResponseEnum {
+
+    Integer getStatusCode();
+
 }

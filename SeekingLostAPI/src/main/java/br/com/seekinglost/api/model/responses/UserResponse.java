@@ -1,4 +1,4 @@
-package br.com.seekinglost.api.model;
+package br.com.seekinglost.api.model.responses;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,8 +10,6 @@ public class UserResponse {
     private String username;
 
     private Integer statusCode;
-
-    private boolean hasError;
 
     public UserResponse() { }
 
