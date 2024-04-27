@@ -1,6 +1,5 @@
 package br.com.seekinglost.api.model.responses;
 
-import br.com.seekinglost.api.model.entitys.User;
 import br.com.seekinglost.api.enums.UserResponseEnum;
 import br.com.seekinglost.api.interfaces.IApiResponse;
 import br.com.seekinglost.api.interfaces.IResponseEnum;
@@ -9,6 +8,8 @@ import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
 @Setter
@@ -32,7 +33,5 @@ public class UserApiResponse implements IApiResponse {
         });
         return hasError.get();
     }
-    private Map<String, User> errors = new HashMap<>();
-    private Map<String, User> successStatus = new HashMap<>();
 
 }
