@@ -12,6 +12,12 @@ export class LoginComponent {
 
   constructor(private router: Router, private userService: UserService) {}
 
+  handleButtonClick(eventData: any) {
+    if (eventData.id == "login") {
+      this.login();
+    }
+  }
+
   login() {
     this.router.navigate(['/home']);
   }

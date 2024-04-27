@@ -7,12 +7,39 @@
         <div class="forms-sign-up-user">
             <h1>Insira as informações...</h1>
             <div class="forms-inputs" [formGroup]="signupForm">
-                <app-input formControlName="username" inputName="email" inputType="email" iconName="person" [width]="inputWidth"></app-input>
-                <app-input formControlName="password" inputName="password" inputType="password" iconName="lock" [width]="inputWidth"></app-input>
-                <app-input formControlName="confirmedPassword" inputName="password" inputType="password" iconName="lock" [width]="inputWidth"></app-input>
+                <div class="input">
+                    <app-input formControlName="username" inputName="email" inputType="email" iconName="person" [width]="inputWidth"></app-input>
+                    <div class="detailed-input" *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.errors?.['required']">
+                        O email é obrigatório!
+                    </div>
+                    <div class="detailed-input" *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.errors?.['email']">
+                        O email não é válido!
+                    </div>
+                </div>
+                <div class="input">
+                    <app-input formControlName="password" inputName="password" inputType="password" iconName="lock" [width]="inputWidth"></app-input>
+                    <div class="detailed-input" *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['required']">
+                        Senha requerida!
+                    </div>
+                    <div class="detailed-input" *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['minlength']">
+                      O campo deve ter pelo menos 5 caracteres.
+                    </div>
+                </div>
+                <div class="input">
+                    <app-input formControlName="confirmedPassword" inputName="password" inputType="password" iconName="lock" [width]="inputWidth"></app-input>
+                    <div class="detailed-input" *ngIf="signupForm.get('confirmedPassword')?.touched && signupForm.get('confirmedPassword')?.errors?.['required']">
+                        Confirme a senha!
+                    </div>
+                    <div class="detailed-input" *ngIf="signupForm.get('confirmedPassword')?.touched && signupForm.get('confirmedPassword')?.errors?.['minlength']">
+                      O campo deve ter pelo menos 5 caracteres.
+                    </div>
+                    <div class="detailed-input" *ngIf="signupForm.hasError('sameValue')">
+                      As senhas não conhecidem!
+                    </div>
+                </div>
             </div>
             <div class="forms-buttons">
-                <app-button (click)="signup()" buttonColor="purple" buttonText="Cadastrar"></app-button>
+                <app-button (buttonClicked)="handleButtonClick($event)" idButton="signup" [isDisabled]="!signupForm.valid" buttonColor="purple" buttonText="Cadastrar"></app-button>
             </div>
             <div class="forms-google-login">
                 <p>Acesse com:</p>

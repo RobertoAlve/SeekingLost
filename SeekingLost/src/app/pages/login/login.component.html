@@ -17,7 +17,7 @@
                 <app-input inputName="password" inputType="password" iconName="lock" [width]="inputWidth"></app-input>
             </div>
             <div class="login-buttons">
-                <app-button (click)="login()" buttonColor="purple" buttonText="Login"></app-button>
+                <app-button (buttonClicked)="handleButtonClick($event)" idButton="login" buttonColor="purple" buttonText="Login"></app-button>
                 <app-button textColor="#B4B4B4" buttonText="Esqueceu a senha?"></app-button>
             </div>
         </div>
