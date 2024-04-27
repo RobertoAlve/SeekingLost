@@ -4,22 +4,25 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-public class User {
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String name;
 
-    private String password;
+    private String lastName;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Person> people;
+    private Date birthday;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_user")
+    private User user;
 
 }
