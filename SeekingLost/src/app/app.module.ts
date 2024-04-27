@@ -12,6 +12,8 @@ import { FooterModule } from './components/footer/footer.module';
 import { FormRegisterPeopleModule } from './pages/form-register-people/form-register-people.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AboutModule } from './pages/about/about.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule as ModalAlertModule } from './components/modal/shared.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { AboutModule } from './pages/about/about.module';
     FormRegisterPeopleModule,
     HeaderModule,
     FooterModule,
-    HttpClientModule
+    HttpClientModule,
+    ModalAlertModule,
+    ModalModule.forRoot()
   ],
   providers: [
     provideClientHydration(),

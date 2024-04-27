@@ -9,6 +9,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Table(name = "Lost_Person")
 public class Person {
 
     @Id
@@ -22,7 +23,9 @@ public class Person {
     private Date birthday;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumns({
+            @JoinColumn(name = "fk_user", referencedColumnName = "username")
+    })
     private User user;
 
 }

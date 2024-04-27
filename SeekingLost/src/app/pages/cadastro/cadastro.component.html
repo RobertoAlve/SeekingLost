@@ -12,7 +12,7 @@
                     <div class="detailed-input" *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.errors?.['required']">
                         O email é obrigatório!
                     </div>
-                    <div class="detailed-input" *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.errors?.['email']">
+                    <div class="detailed-input" *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.errors?.['pattern']">
                         O email não é válido!
                     </div>
                 </div>
