@@ -1,6 +1,6 @@
 package br.com.seekinglost.api.service;
 
-import br.com.seekinglost.api.model.Person;
+import br.com.seekinglost.api.model.entitys.Person;
 import br.com.seekinglost.api.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

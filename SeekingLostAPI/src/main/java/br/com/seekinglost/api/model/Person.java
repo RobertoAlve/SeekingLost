@@ -1,4 +1,4 @@
-package br.com.seekinglost.api.model;
+package br.com.seekinglost.api.model.entitys;
 
 import jakarta.persistence.*;
 import lombok.Getter;
