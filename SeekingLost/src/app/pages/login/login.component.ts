@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user-service/user-service.service';
 
 @Component({
   selector: 'app-login',
@@ -7,13 +8,21 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  email: string = "";
-  password: string = "";
   inputWidth: string = "100%"
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
+
+  handleButtonClick(eventData: any) {
+    if (eventData.id == "login") {
+      this.login();
+    }
+  }
 
   login() {
-    this.router.navigate(['/register-lost-people']);
+    this.router.navigate(['/home']);
+  }
+
+  signup() {
+    this.router.navigate(['/sign-up']);
   }
 }

@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { ButtonColor } from '../../class/ButtonColor';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -7,11 +8,13 @@ import { ButtonColor } from '../../class/ButtonColor';
   styleUrl: './button.component.scss'
 })
 export class ButtonComponent {
+  @Output() buttonClicked: EventEmitter<Object> = new EventEmitter<Object>();
   @Input() buttonText?: string = "Default";
   @Input() buttonColor?: string = "#FFF";
   @Input() textColor?: string = "#FFF";
   @Input() buttonType?: string = ""
   @Input() isDisabled?: boolean = false;
+  @Input() idButton?: string = "idDefault";
   availableColors: ButtonColor[] = []
 
   constructor() { }
@@ -22,6 +25,10 @@ export class ButtonComponent {
     this.availableColors.push(new ButtonColor("purple", "#7B6CDB"))
 
     this.getButtonColor();
+  }
+
+  onClick() {
+    this.buttonClicked.emit({"id": this.idButton});
   }
 
   private getButtonColor() {

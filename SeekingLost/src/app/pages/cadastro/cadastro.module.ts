@@ -4,6 +4,7 @@ import { CadastroComponent } from './cadastro.component';
 import { LogoModule } from '../../components/logo/logo.module';
 import { InputModule } from '../../components/input/input.module';
 import { ButtonModule } from '../../components/button/button.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ButtonModule } from '../../components/button/button.module';
     CommonModule,
     LogoModule,
     InputModule,
-    ButtonModule
+    ButtonModule,
+    ReactiveFormsModule
   ],
   exports: [
     CadastroComponent

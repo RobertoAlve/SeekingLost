@@ -36,8 +36,8 @@
                     </div>
                 </form>
                 <div class="buttons-form">
-                    <app-button (click)="cancelRegister()" buttonText="Cancelar" textColor="#BDBCBC"></app-button>
-                    <app-button [isDisabled]="!registerForm.valid" (click)="registerPeople()" buttonText="Avançar" buttonColor="#7B6CDB"></app-button>
+                    <app-button (buttonClicked)="handleButtonClick($event)" idButton="cancel" buttonText="Cancelar" textColor="#BDBCBC"></app-button>
+                    <app-button (buttonClicked)="handleButtonClick($event)" idButton="next" [isDisabled]="!registerForm.valid" buttonText="Avançar" buttonColor="#7B6CDB"></app-button>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
                     <input type="file" id="file-input" accept="image/*" multiple style="display: none;" (change)="onFilesSelected($event)" />
                 </div>
                 <div class="buttons-form">
-                    <app-button (click)="cancelRegister()" buttonText="Cancelar" textColor="#BDBCBC"></app-button>
+                    <app-button (buttonClicked)="handleButtonClick($event)" idButton="cancel" buttonText="Cancelar" textColor="#BDBCBC"></app-button>
                     <app-button buttonText="Finalizar" buttonColor="#7B6CDB" buttonType="submit"></app-button>
                 </div>
             </div>

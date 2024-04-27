@@ -9,6 +9,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Table(name = "Lost_Person")
 public class Person {
 
     @Id

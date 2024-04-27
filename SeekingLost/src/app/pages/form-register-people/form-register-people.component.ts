@@ -25,9 +25,19 @@ export class FormRegisterPeopleComponent {
 
   ngOnInit(): void { }
 
+  handleButtonClick(eventData: any) {
+    if (eventData.id == "cancel") {
+      this.cancelRegister();
+    }
+
+    if (eventData.id == "next") {
+      this.registerPeople();
+    }
+  }
+
   registerPeople(): void {
     this.importImage = true;
-    console.log(this.registerForm.get('firstName'))
+    console.log(this.registerForm.get('firstName')?.value)
   }
 
   cancelRegister(): void {
