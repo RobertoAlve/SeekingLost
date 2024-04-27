@@ -1,6 +1,6 @@
 package br.com.seekinglost.api.controller;
 
-import br.com.seekinglost.api.model.Person;
+import br.com.seekinglost.api.model.entitys.Person;
 import br.com.seekinglost.api.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
