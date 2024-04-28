@@ -7,6 +7,7 @@ import { sameValueValidator } from '../../validators/SameValueValidator.validato
 import { UserApiResponse } from '../../class/UserApiResponse';
 import { EncryptPasswordService } from '../../services/encrypt-password/encrypt-password.service';
 import { ModalService } from '../../services/modal-service/modal-service.service';
+import { UserResponseEnum } from '../../enum/user-responseenenum';
 
 @Component({
   selector: 'app-cadastro',
@@ -47,11 +48,36 @@ export class CadastroComponent {
           this.userService.createUser(user).subscribe({
             next: (data: UserApiResponse) => {
               console.log(data);
+
+              this.modalService.openAlertModal(
+                "Sucesso", 
+                "Usuário cadastrado com sucesso!",
+                "success"
+              )
+
               this.router.navigate(['/login']);
             },
-            error: (error: UserApiResponse) => {
-              console.error(error);
-              this.modalService.openAlertModal("Error", "Erro ao cadastrar usuario!", "danger")
+            error: (error: any) => {
+              const errorResponse = UserApiResponse.fromError(error);
+              var errorCode = 0;
+              var message = "Erro ao cadastrar usuário!"
+
+              for (const key in errorResponse.status) {
+                if (Object.prototype.hasOwnProperty.call(errorResponse.status, key)) {
+                  const userStatus = errorResponse.status[key];
+                  errorCode = userStatus.statusCode;
+                }
+              }
+
+              if (errorCode == UserResponseEnum.ALREADY_EXISTS.code) {
+                message = message + " Email já cadastrado!"
+              }
+
+              this.modalService.openAlertModal(
+                "Error", 
+                message,
+                "danger"
+              )
             }
           });
       })
