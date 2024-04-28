@@ -60,7 +60,7 @@
                 </div>
                 <div class="buttons-form">
                     <app-button (buttonClicked)="handleButtonClick($event)" idButton="cancel" buttonText="Cancelar" textColor="#BDBCBC"></app-button>
-                    <app-button buttonText="Finalizar" buttonColor="#7B6CDB" buttonType="submit"></app-button>
+                    <app-button (buttonClicked)="handleButtonClick($event)" idButton="sendImage" buttonText="Finalizar" buttonColor="#7B6CDB" buttonType="submit"></app-button>
                 </div>
             </div>
         </ng-template>

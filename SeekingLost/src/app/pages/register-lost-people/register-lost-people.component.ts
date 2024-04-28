@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { LostPersonService } from '../../services/lost-person/lost-person.service';
+import { PersonResponse } from '../../class/PersonResponse';
 
 @Component({
   selector: 'app-register-lost-people',
@@ -7,11 +9,22 @@ import { Router } from '@angular/router';
   styleUrl: './register-lost-people.component.scss'
 })
 export class RegisterLostPeopleComponent {
-  imagePath = '../../../assets/images/people_1.jpeg';
+  lostPersons: PersonResponse[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private lostPersonService: LostPersonService) { }
+
+  ngOnInit() {
+    this.lostPersonService.getLostPersons("roberto@gmail.com").subscribe({
+      next: (data: any) => {
+        this.lostPersons = data;
+      },
+      error: (error: any) => {
+      }
+    });
+  }
 
   newRegister() {
     this.router.navigate(['/register-lost-people/form']);
   }
+
 }
