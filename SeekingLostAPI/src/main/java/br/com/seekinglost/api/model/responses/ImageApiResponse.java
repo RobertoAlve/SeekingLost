@@ -1,6 +1,6 @@
 package br.com.seekinglost.api.model.responses;
 
-import br.com.seekinglost.api.enums.UserResponseEnum;
+import br.com.seekinglost.api.enums.ImageResponseEnum;
 import br.com.seekinglost.api.interfaces.IApiResponse;
 import br.com.seekinglost.api.interfaces.IResponseEnum;
 import br.com.seekinglost.api.interfaces.Response;
@@ -16,26 +16,25 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Getter
 @Setter
 @Slf4j
-public class UserApiResponse implements IApiResponse {
+public class ImageApiResponse implements IApiResponse {
 
-    private Map<IResponseEnum, UserResponse> status = new HashMap<>();
+    private Map<IResponseEnum, Response> status = new HashMap<>();
 
     @Override
     public void addStatus(IResponseEnum responseEnum, Response response) {
-        log.info("Method not implemented");
+        this.status.put(responseEnum, response);
     }
 
     @Override
-    public void addStatus(IResponseEnum userResponse, String target) {
-        this.status.put(userResponse, new UserResponse(target, userResponse.getStatusCode()));
+    public void addStatus(IResponseEnum responseEnum, String target) {
+        log.info("Method not implemented");
     }
 
     @Override
     public boolean hasError() {
         AtomicBoolean hasError = new AtomicBoolean(false);
-        this.status.forEach((responseEnum, userResponse) -> {
-            if (Objects.equals(userResponse.getStatusCode(), UserResponseEnum.ERROR.getCode()) ||
-                Objects.equals(userResponse.getStatusCode(), UserResponseEnum.ALREADY_EXISTS.getCode())) {
+        this.status.forEach((responseEnum, imageResponse) -> {
+            if (Objects.equals(responseEnum.getStatusCode(), ImageResponseEnum.ERROR.getCode())) {
                 hasError.set(true);
             }
         });

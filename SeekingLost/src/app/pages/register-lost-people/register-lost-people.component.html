@@ -2,7 +2,9 @@
     <div class="container-main">
         <h1>Pessoas Cadastradas</h1>
         <div class="container-people-cards">
-            <app-people-card peopleName="Roberto" [imagePath]="imagePath"></app-people-card>
+            <div *ngFor="let person of lostPersons">
+                <app-people-card [peopleName]="person.firstName" [peopleToken]="person.token"></app-people-card>
+            </div>
             <app-people-card (click)="newRegister()" [isNewCard]="true"></app-people-card>
         </div>
     </div>

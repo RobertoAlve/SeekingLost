@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { clear } from 'console';
+import { LostPerson } from '../../class/LostPerson';
+import { User } from '../../class/User';
+import { LostPersonService } from '../../services/lost-person/lost-person.service';
+import { PersonApiResponse } from '../../class/PersonApiResponse';
+import { ModalService } from '../../services/modal-service/modal-service.service';
+import { TokenService } from '../../services/token-service/token.service';
+import { ImageService } from '../../services/image-service/image.service';
+import { ImageApiResponse } from '../../class/ImageApiResponse';
 
 @Component({
   selector: 'app-form-register-people',
@@ -14,8 +20,14 @@ export class FormRegisterPeopleComponent {
   hasImagesForUp: boolean = false;
   selectedFiles: File[] = [];
   registerForm: FormGroup;
+  personToken: String = "";
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(private formBuilder: FormBuilder, 
+              private router: Router, 
+              private lostPersonService: LostPersonService,
+              private modalService: ModalService,
+              private tokenService: TokenService,
+              private imageService: ImageService) {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -33,11 +45,57 @@ export class FormRegisterPeopleComponent {
     if (eventData.id == "next") {
       this.registerPeople();
     }
+
+    if (eventData.id == "sendImage") {
+      this.uploadFiles();
+    }
   }
 
   registerPeople(): void {
-    this.importImage = true;
-    console.log(this.registerForm.get('firstName')?.value)
+    var firstName = this.registerForm.get('firstName')?.value;
+    var lastName = this.registerForm.get('lastName')?.value;
+    var birthDay = this.registerForm.get('birthDay')?.value;
+    this.personToken = this.tokenService.generateToken();
+
+    if (this.personToken == null || this.personToken == "") {
+      this.modalService.openAlertModal(
+        "Error", 
+        "Token para a pessoa não criado!",
+        "danger"
+      )
+      return;
+    }
+
+    var person = new LostPerson(firstName, lastName, birthDay, this.personToken, new User("roberto@gmail.com", ""));
+
+    this.lostPersonService.createLostPerson(person).subscribe({
+      next: (data: PersonApiResponse) => {
+        this.modalService.openAlertModal(
+          "Sucesso",
+          "Pessoa cadastrada com sucesso!",
+          "success"
+        )
+        
+        this.importImage = true;
+      },
+      error: (error: any) => {
+        const response = PersonApiResponse.fromError(error);
+        var status;
+        var message = "Erro ao cadastrar!"
+
+        for (const key in response.status) {
+          if (Object.prototype.hasOwnProperty.call(response.status, key)) {
+            status = response.status[key];
+          }
+        }
+
+        this.modalService.openAlertModal(
+          "Error", 
+          message,
+          "danger"
+        )
+      }
+    });
   }
 
   cancelRegister(): void {
@@ -82,7 +140,6 @@ export class FormRegisterPeopleComponent {
       })
 
       this.hasImagesForUp = true;
-      this.uploadFiles();
     }
   }
 
@@ -110,7 +167,6 @@ export class FormRegisterPeopleComponent {
       })
 
       this.hasImagesForUp = true;
-      this.uploadFiles();
     }
   }
 
@@ -119,12 +175,35 @@ export class FormRegisterPeopleComponent {
       return;
     }
 
-    const formData = new FormData();
-    this.selectedFiles.forEach(file => {
-      formData.append('files', file);
-    });
+    this.imageService.saveImages(this.selectedFiles, this.personToken).subscribe({
+      next: (data: any) => {
+        this.modalService.openAlertModal(
+          "Sucesso",
+          "Fotos cadastradas com sucesso!",
+          "success"
+        )
+        
+        this.router.navigate(['/register-lost-people']);
+      },
+      error: (error: any) => {
+        console.log(error)
+        const response = ImageApiResponse.fromError(error);
+        var status;
+        var message = "Erro ao cadastrar imagens!"
 
-    console.log('Arquivos selecionados:', this.selectedFiles);
+        for (const key in response.status) {
+          if (Object.prototype.hasOwnProperty.call(response.status, key)) {
+            status = response.status[key];
+          }
+        }
+
+        this.modalService.openAlertModal(
+          "Error", 
+          message,
+          "danger"
+        )
+      }
+    });
   }
   
   getFormProgress(): number {

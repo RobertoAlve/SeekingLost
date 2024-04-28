@@ -22,6 +22,8 @@ public class Person {
 
     private Date birthday;
 
+    private String token;
+
     @ManyToOne
     @JoinColumn(name = "fk_user")
     private User user;
