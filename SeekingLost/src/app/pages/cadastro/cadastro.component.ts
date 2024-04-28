@@ -36,6 +36,10 @@ export class CadastroComponent {
     }
   }
 
+  toLogin() {
+    this.router.navigate(['/login']);
+  }
+
   signup() {
     var username = this.signupForm.get('username')?.value;
     var password = this.signupForm.get('password')?.value;

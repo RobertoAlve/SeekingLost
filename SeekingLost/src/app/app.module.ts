@@ -10,14 +10,17 @@ import { RegisterLostPeopleModule } from './pages/register-lost-people/register-
 import { HeaderModule } from './components/header/header.module';
 import { FooterModule } from './components/footer/footer.module';
 import { FormRegisterPeopleModule } from './pages/form-register-people/form-register-people.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AboutModule } from './pages/about/about.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalModule as ModalAlertModule } from './components/modal/shared.module';
+import { LoadingInterceptor } from './loading.interceptor';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,9 @@ import { ModalModule as ModalAlertModule } from './components/modal/shared.modul
   ],
   providers: [
     provideClientHydration(),
+    {
+      provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

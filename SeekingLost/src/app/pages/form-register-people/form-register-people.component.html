@@ -21,17 +21,23 @@
                 <form [formGroup]="registerForm" action="">
                     <div class="input">
                         <p>Nome</p>
-                        <input id="firstName" formControlName="firstName" type="text">
+                        <input name="firstName" formControlName="firstName" type="text">
                         <div class="detailed-input" *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.errors?.['required']">O campo Nome é requerido!</div>
+                        <div class="detailed-input" *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.errors?.['minlength']">
+                          O campo deve ter pelo menos 5 caracteres.
+                        </div>
                     </div>
                     <div class="input">
                         <p>Sobrenome</p>
-                        <input id="lastName" formControlName="lastName" type="text">
+                        <input name="lastName" formControlName="lastName" type="text">
                         <div class="detailed-input" *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.errors?.['required']">O campo Sobrenome é requerido!</div>
+                        <div class="detailed-input" *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.errors?.['minlength']">
+                          O campo deve ter pelo menos 5 caracteres.
+                        </div>
                     </div>
                     <div class="input">
                         <p>Data de Nascimento</p>
-                        <input id="birthDay" formControlName="birthDay"  type="date">
+                        <input name="birthDay" formControlName="birthDay"  type="date">
                         <div class="detailed-input" *ngIf="registerForm.get('birthDay')?.touched && registerForm.get('birthDay')?.errors?.['required']">O campo Data de Nascimento é requerido!</div>
                     </div>
                 </form>
