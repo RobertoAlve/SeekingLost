@@ -1,4 +1,4 @@
-<section class="modal hidden">
+<section class="modal hidden"[ngClass]="{'modal-success': type === 'success', 'modal-danger': type === 'danger', 'modal-warning': type === 'warning'}">
   <div class="flex">
     <h3>{{ title }}</h3>
     <button class="btn-close" (click)="onClose()">⨉</button>

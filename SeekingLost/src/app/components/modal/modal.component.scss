@@ -18,12 +18,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    h3 {
+        font-size: 18px;
+        font-weight: bold;
+    }
 }
 
 .modal p {
     font-size: 0.9rem;
     color: #777;
     margin: 0.4rem 0 0.2rem;
+    font-size: 18px;
 }
 
 button {
@@ -37,4 +43,22 @@ button {
     padding: 0.5rem 0.7rem;
     background: #eee;
     border-radius: 50%;
+}
+
+.modal-danger {
+    background-color: #d06262;
+    color: #fff;
+
+    p {
+        color: #fff !important;
+    }
+}
+
+.modal-success {
+    background-color: #92dc7b;
+    color: #fff;
+
+    p {
+        color: #fff !important;
+    }
 }
