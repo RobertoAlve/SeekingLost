@@ -1,0 +1,4 @@
+<div class="input_div">
+    <mat-icon>{{ iconName }}</mat-icon>
+    <input [type]="inputType" [name]="inputName" [(ngModel)]="value" [style.height]="height" [style.width]="width" (input)="updateValue($event)" [value]="value">
+</div>

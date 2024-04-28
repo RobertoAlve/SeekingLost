@@ -1,0 +1,25 @@
+<div class="main-container">
+    <div class="login-header">
+        <app-logo></app-logo>
+        <div class="register-user">Novo usuario?<p (click)="signup()">Cadastre-se</p></div>
+    </div>
+    <div class="division-container">
+        <div class="img-login">
+            <img src="../../../assets/images/undraw_login_re_4vu2.svg" alt="">
+        </div>
+        <div class="form-login">
+            <div class="title-form">
+                <h1>Bem vindo de volta!</h1>
+                <p>Faça login para continuar</p>
+            </div>
+            <div class="inputs">
+                <app-input inputName="email" inputType="email" iconName="person" [width]="inputWidth"></app-input>
+                <app-input inputName="password" inputType="password" iconName="lock" [width]="inputWidth"></app-input>
+            </div>
+            <div class="login-buttons">
+                <app-button (buttonClicked)="handleButtonClick($event)" idButton="login" buttonColor="purple" buttonText="Login"></app-button>
+                <app-button textColor="#B4B4B4" buttonText="Esqueceu a senha?"></app-button>
+            </div>
+        </div>
+    </div>
+</div>

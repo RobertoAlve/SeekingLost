@@ -3,7 +3,17 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ButtonModule } from './components/button/button.module';
+import { LoginModule } from './pages/login/login.module';
+import { CadastroModule } from './pages/cadastro/cadastro.module';
+import { HomeModule } from './pages/home/home.module';
+import { RegisterLostPeopleModule } from './pages/register-lost-people/register-lost-people.module';
+import { HeaderModule } from './components/header/header.module';
+import { FooterModule } from './components/footer/footer.module';
+import { FormRegisterPeopleModule } from './pages/form-register-people/form-register-people.module';
+import { HttpClientModule } from '@angular/common/http';
+import { AboutModule } from './pages/about/about.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule as ModalAlertModule } from './components/modal/shared.module';
 
 @NgModule({
   declarations: [
@@ -12,10 +22,20 @@ import { ButtonModule } from './components/button/button.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ButtonModule
+    LoginModule,
+    CadastroModule,
+    HomeModule,
+    AboutModule,
+    RegisterLostPeopleModule,
+    FormRegisterPeopleModule,
+    HeaderModule,
+    FooterModule,
+    HttpClientModule,
+    ModalAlertModule,
+    ModalModule.forRoot()
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
   ],
   bootstrap: [AppComponent]
 })

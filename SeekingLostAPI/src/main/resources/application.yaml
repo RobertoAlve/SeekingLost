@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: "SeekingLost API"
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/seekinglost}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:20@FssA22}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+aws:
+  access-key: ${AWS_ACCESS_KEY:ASIAZBPGYG2GFPJV2J4Y}
+  secret-key: ${AWS_SECRET_KEY:GLu6pyCwwcTVBPzMlGiQhlSzeSXRGgh4fEI07xH+}
+  session-token: ${AWS_SESSION_TOKEN:IQoJb3JpZ2luX2VjEGgaCXVzLXdlc3QtMiJIMEYCIQC9N/sdimFSc98BY1pyZcXgcmiIVJSx3r0neTZLjlDyxAIhAL2sHK6Cjrhqvp5LO8Jcf+pjmhJGgfNGAKPyficnZRQmKrQCCLH//////////wEQARoMNjIxNjQzNTc2OTcyIgxsHHMt5q4Vl62rPxwqiALYBslu6JX5fBw8QYSTO4BWqNqwC7MNbBKtYJz7mQOXWhbkLgF32Vz/5sXNmhcQFq6TSbU4UbwEDAetGTZJB7eFDXG05I80kdEVbUCXH+3VdqYvDpi4Jro7l9OJvcYDw4CrHZS8QotKyqC2/dCvW7T7lJUXFJkMHDyCGUrJbs8tCutHBvykMTPQnBBmLd6MtKSdtR95fOvqKOYqH45YvRs3sinLLoSA9JmHRbgR8cTYs0XeFErurPVRZmwDMufnhwCBAVPdRhxtIIANPaBHSjOSgtyPCEV069tpGfaA+SWNpKKFP+3QazhRIa0d4XhWKTyYy/kxfckasKXKvZdR19Shyyxj7umEbMgw7dWrsQY6nAGwF0cUTtOWj/ZZ/uiargUoBlZRi+TvQOI/uPVjTlChNtA22TcqY6g9XSSAl/k7CfbGwbVSaKr3iyloHLywiXwY8Jojb22ouMnXHc7UUmOJ9/p/QO4JVLFZsgTh7ev0x6nZjgNS/5yGBnHIpKCOply8xtcCbgZahCPI2deud+5KycwaEmSuFaY+eRdN1qpJMd1o8obb7ZuhgEVmRYs=}
+  region: ${AWS_REGION:us-east-1}
+  bucket-name: ${AWS_BUCKET_NAME:seekinglost-dados-treino-raw}

@@ -1,0 +1,25 @@
+.input_div { 
+    width: 100%;
+    position: relative;
+}
+
+.input_div input {
+    margin: 12px;
+    font-size: 18px;
+    border-radius: 4px;
+    padding-left: 50px;
+    box-sizing: border-box;
+    border: 1px solid #7B6CDB;
+}
+
+.input_div input:focus {
+    outline: 1px solid #391cf7 ;
+}
+
+mat-icon {
+    top: 32px;
+    left: 28px;
+    font-size: 28px;
+    color: #7B6CDB;
+    position: absolute;
+}

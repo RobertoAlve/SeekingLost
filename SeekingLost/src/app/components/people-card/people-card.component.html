@@ -1,0 +1,7 @@
+<div class="main-container">
+    <div class="image-people" [style.background-color]="backgroundColor" [ngStyle]="{backgroundImage: 'url(' + imagePath + ')'}">
+        <ng-container *ngIf="isNewCard;">
+            <div class="add-people">+</div>
+        </ng-container></div>
+    <p>{{ peopleName }}</p>
+</div>
