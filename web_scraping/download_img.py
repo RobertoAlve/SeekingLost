@@ -1,3 +1,5 @@
+# The script responsible for mining data from images of actors
+
 import os
 import json
 import boto3
@@ -27,22 +29,24 @@ def download_img(img_tags, num_imgs:int, actor:str)->None:
         with open(f'temp_imagens/{actor}_{i}.jpeg', 'wb') as img_file:
             img_file.write(img_data)
 
-def upload_s3(ator):
+def upload_s3(ator:str)->None:
     s3 = boto3.client("s3")
-    bucket_name = "testaaaaapapepipo"
+    bucket_name = "seekinglost-dados-treino-raw"
 
     for img_path in tqdm(os.listdir("temp_imagens")):
         img_name = os.path.basename(img_path)
         s3.upload_file(f"temp_imagens/{img_name}", bucket_name, f"{ator}/{img_name}")
 
 
-def main(list_actors, num_imgs):
+def main(list_actors:list, num_imgs:int)->None:
     for actor in list_actors:
         actor = actor.lower().replace(' ','_')
         img_tags = get_search(actor)
 
         download_img(img_tags, num_imgs, actor)
         upload_s3(actor)
+
+    shutil.rmtree('temp_imagens')
 
 
 if __name__ == '__main__':
