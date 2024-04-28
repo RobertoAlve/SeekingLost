@@ -29,8 +29,8 @@ export class FormRegisterPeopleComponent {
               private tokenService: TokenService,
               private imageService: ImageService) {
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', [Validators.required, Validators.minLength(5)]],
+      lastName: ['', [Validators.required, Validators.minLength(5)]],
       birthDay: ['', Validators.required]
     });
   }
