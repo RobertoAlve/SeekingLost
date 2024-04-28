@@ -1,7 +1,10 @@
 package br.com.seekinglost.api.controller;
 
+import br.com.seekinglost.api.enums.ImageResponseEnum;
+import br.com.seekinglost.api.model.responses.ImageApiResponse;
+import br.com.seekinglost.api.model.responses.ImageResponse;
+import br.com.seekinglost.api.model.responses.UriResponse;
 import br.com.seekinglost.api.service.integration.azure.s3.S3ImageService;
-import com.amazonaws.services.s3.model.S3Object;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -21,38 +22,39 @@ public class ImageController {
     @Autowired
     private S3ImageService s3ImageService;
 
-    @GetMapping("/{userKey}")
-    private ResponseEntity<S3Object> getImageForUser(@PathVariable String userKey) {
+    @GetMapping("/{token}")
+    private ResponseEntity<UriResponse> getImageForUser(@PathVariable String token) {
         try {
-            return ResponseEntity.ok().body(s3ImageService.getFirstImageFromDirectory(userKey));
+            return ResponseEntity.ok().body(new UriResponse(s3ImageService.getUrlFirstImageFromDirectory(token).toURI().toString()));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseEntity.badRequest().build();
         }
     }
 
-    @PostMapping("/upload")
-    private ResponseEntity<String> uploadImages(@RequestParam("files") MultipartFile[] images) {
-        Map<String, Exception> errors = new HashMap<>();
-
+    @PostMapping("/upload/{token}")
+    private ResponseEntity<ImageApiResponse> uploadImages(@RequestParam("files") MultipartFile[] images, @PathVariable String token) {
+        ImageApiResponse response = new ImageApiResponse();
         for (MultipartFile image : images) {
             if (!image.isEmpty()) {
                 try {
                     File tempFile = File.createTempFile("temp", null);
                     image.transferTo(tempFile);
-                    s3ImageService.uploadImage(tempFile, image.getOriginalFilename());
+                    s3ImageService.uploadImage(tempFile, token + "/" + image.getOriginalFilename());
                     tempFile.delete();
+
+                    response.addStatus(ImageResponseEnum.UPLOAD, new ImageResponse(ImageResponseEnum.UPLOAD.getMessage()));
                 } catch (IOException e) {
                     log.error(e.getMessage(), e);
-                    errors.put(e.getMessage(), e);
+                    response.addStatus(ImageResponseEnum.ERROR, new ImageResponse(e.getMessage()));
                 }
             }
         }
 
-        if (errors.isEmpty())
-            return ResponseEntity.ok().body("Upload success!");
+        if (response.hasError())
+            return ResponseEntity.badRequest().body(response);
         else
-            return ResponseEntity.badRequest().body("Upload error!");
+            return ResponseEntity.ok().body(response);
     }
 
 }

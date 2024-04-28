@@ -1,2 +1,4 @@
-package br.com.seekinglost.api.interfaces;public interface Response {
+package br.com.seekinglost.api.interfaces;
+
+public interface Response {
 }
