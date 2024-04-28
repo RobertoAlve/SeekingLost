@@ -1,0 +1,24 @@
+package br.com.seekinglost.api.enums;
+
+import br.com.seekinglost.api.interfaces.IResponseEnum;
+import lombok.Getter;
+
+@Getter
+public enum ImageResponseEnum implements IResponseEnum {
+    ERROR("Error upload images!", 0),
+    UPLOAD("Success upload images!", 1);
+
+    private final String message;
+
+    private final Integer code;
+
+    ImageResponseEnum(String message, Integer code) {
+        this.message = message;
+        this.code = code;
+    }
+
+    @Override
+    public Integer getStatusCode() {
+        return code;
+    }
+}

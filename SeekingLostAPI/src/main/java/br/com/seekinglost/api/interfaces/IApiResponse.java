@@ -7,6 +7,8 @@ public interface IApiResponse {
 
     Map<IResponseEnum, String> status = new HashMap<>();
 
+    void addStatus(IResponseEnum responseEnum, Response response);
+
     void addStatus(IResponseEnum responseEnum, String target);
 
     boolean hasError();

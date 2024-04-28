@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 @Service
@@ -67,4 +68,20 @@ public class S3ImageService {
         return s3client.getObject(bucketName, firstImageKey);
     }
 
+    public URL getUrlFirstImageFromDirectory(String directoryPath) {
+        ListObjectsV2Request request = new ListObjectsV2Request()
+                .withBucketName(bucketName)
+                .withPrefix(directoryPath + "/")
+                .withMaxKeys(1);
+
+        ListObjectsV2Result objectListing = s3client.listObjectsV2(request);
+        List<S3ObjectSummary> objects = objectListing.getObjectSummaries();
+
+        if (objects.isEmpty()) {
+            throw new RuntimeException("No images found in the directory.");
+        }
+
+        String firstImageKey = objects.getFirst().getKey();
+        return s3client.getUrl(bucketName, firstImageKey);
+    }
 }
