@@ -7,7 +7,9 @@ import lombok.Getter;
 public enum UserResponseEnum implements IResponseEnum {
 
     ERROR("Error creating user!", 0),
+    ERROR_AUTH("Error login user!", 0),
     CREATED("User created!", 1),
+    OK("Ok", 1),
     ALREADY_EXISTS("Users already exist!", 2);
 
     private final String message;

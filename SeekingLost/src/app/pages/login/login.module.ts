@@ -4,6 +4,7 @@ import { LoginComponent } from './login.component';
 import { ButtonModule } from '../../components/button/button.module';
 import { InputModule } from '../../components/input/input.module';
 import { LogoModule } from '../../components/logo/logo.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { LogoModule } from '../../components/logo/logo.module';
     CommonModule,
     ButtonModule,
     InputModule,
-    LogoModule
+    LogoModule,
+    ReactiveFormsModule
   ],
   exports: [
     LoginComponent

@@ -17,6 +17,8 @@ public class User {
 
     private String password;
 
+    private Boolean isAuthenticated = false;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Person> people;
 

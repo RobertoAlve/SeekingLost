@@ -4,6 +4,8 @@ import br.com.seekinglost.api.model.entitys.User;
 import br.com.seekinglost.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -31,4 +33,10 @@ public class UserService {
     public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
+
+    public void authenticatingUser(User user) {
+        user.setIsAuthenticated(true);
+        userRepository.save(user);
+    }
+
 }
