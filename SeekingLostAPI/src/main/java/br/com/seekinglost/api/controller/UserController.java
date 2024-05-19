@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Objects;
 
 
 @Slf4j
@@ -47,6 +48,26 @@ public class UserController {
             return ResponseEntity.ok(findUser);
         else
             return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserApiResponse> postLogin(@RequestBody User user) {
+        UserApiResponse returnResponse = new UserApiResponse();
+        User findUser = userService.getUserById(user.getUsername());
+
+        if ( Objects.isNull(findUser) ) {
+            returnResponse.addStatus(UserResponseEnum.ERROR_AUTH, "Invalid Fields");
+        } else {
+            userService.authenticatingUser(findUser);
+            returnResponse.addStatus(UserResponseEnum.OK, findUser.getPassword());
+        }
+
+        if (returnResponse.hasError()) {
+            return ResponseEntity.badRequest().body(returnResponse);
+        }
+        else {
+            return ResponseEntity.ok(returnResponse);
+        }
     }
 
 }
