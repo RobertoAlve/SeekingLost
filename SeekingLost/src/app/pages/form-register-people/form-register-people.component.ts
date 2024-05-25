@@ -66,36 +66,47 @@ export class FormRegisterPeopleComponent {
       return;
     }
 
-    var person = new LostPerson(firstName, lastName, birthDay, this.personToken, new User("roberto@gmail.com", ""));
+    var userId = sessionStorage.getItem('userId');
+    console.log(userId);
 
-    this.lostPersonService.createLostPerson(person).subscribe({
-      next: (data: PersonApiResponse) => {
-        this.modalService.openAlertModal(
-          "Sucesso",
-          "Pessoa cadastrada com sucesso!",
-          "success"
-        )
-        
-        this.importImage = true;
-      },
-      error: (error: any) => {
-        const response = PersonApiResponse.fromError(error);
-        var status;
-        var message = "Erro ao cadastrar!"
+    if (userId != null) {
+      var person = new LostPerson(firstName, lastName, birthDay, this.personToken, new User(userId, ""));
 
-        for (const key in response.status) {
-          if (Object.prototype.hasOwnProperty.call(response.status, key)) {
-            status = response.status[key];
+      this.lostPersonService.createLostPerson(person).subscribe({
+        next: (data: PersonApiResponse) => {
+          this.modalService.openAlertModal(
+            "Sucesso",
+            "Pessoa cadastrada com sucesso!",
+            "success"
+          )
+          
+          this.importImage = true;
+        },
+        error: (error: any) => {
+          const response = PersonApiResponse.fromError(error);
+          var status;
+          var message = "Erro ao cadastrar!"
+
+          for (const key in response.status) {
+            if (Object.prototype.hasOwnProperty.call(response.status, key)) {
+              status = response.status[key];
+            }
           }
-        }
 
-        this.modalService.openAlertModal(
-          "Error", 
-          message,
-          "danger"
-        )
-      }
-    });
+          this.modalService.openAlertModal(
+            "Error", 
+            message,
+            "danger"
+          )
+        }
+      });
+    } else {
+      this.modalService.openAlertModal(
+        "Error", 
+        "Error in register!",
+        "danger"
+      )
+    }
   }
 
   cancelRegister(): void {
