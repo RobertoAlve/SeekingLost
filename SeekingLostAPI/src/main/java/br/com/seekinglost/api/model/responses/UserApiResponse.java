@@ -27,7 +27,11 @@ public class UserApiResponse implements IApiResponse {
 
     @Override
     public void addStatus(IResponseEnum userResponse, String target) {
-        this.status.put(userResponse, new UserResponse(target, userResponse.getStatusCode()));
+        this.status.put(userResponse, new UserResponse(target, userResponse.getStatusCode(), ""));
+    }
+
+    public void addStatus(IResponseEnum userResponse, String target, String id) {
+        this.status.put(userResponse, new UserResponse(target, userResponse.getStatusCode(), id));
     }
 
     @Override

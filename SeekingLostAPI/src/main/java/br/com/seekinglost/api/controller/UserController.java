@@ -59,7 +59,7 @@ public class UserController {
             returnResponse.addStatus(UserResponseEnum.ERROR_AUTH, "Invalid Fields");
         } else {
             userService.authenticatingUser(findUser);
-            returnResponse.addStatus(UserResponseEnum.OK, findUser.getPassword());
+            returnResponse.addStatus(UserResponseEnum.OK, findUser.getPassword(), findUser.getUsername());
         }
 
         if (returnResponse.hasError()) {

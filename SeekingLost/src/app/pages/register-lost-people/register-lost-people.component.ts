@@ -14,13 +14,16 @@ export class RegisterLostPeopleComponent {
   constructor(private router: Router, private lostPersonService: LostPersonService) { }
 
   ngOnInit() {
-    this.lostPersonService.getLostPersons("roberto@gmail.com").subscribe({
-      next: (data: any) => {
-        this.lostPersons = data;
-      },
-      error: (error: any) => {
-      }
-    });
+    var userId = sessionStorage.getItem('userId');
+    if (userId != null) {
+      this.lostPersonService.getLostPersons(userId).subscribe({
+        next: (data: any) => {
+          this.lostPersons = data;
+        },
+        error: (error: any) => {
+        }
+      });
+    }
   }
 
   newRegister() {

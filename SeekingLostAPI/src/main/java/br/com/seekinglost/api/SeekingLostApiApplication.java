@@ -8,9 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SeekingLostApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication application = new SpringApplication(SeekingLostApiApplication.class);
-		application.addInitializers(new CredentialsInitializer());
-		application.run(args);
+		SpringApplication.run(SeekingLostApiApplication.class, args);
+//		SpringApplication application = new SpringApplication(SeekingLostApiApplication.class);
+//		application.addInitializers(new CredentialsInitializer());
+//		application.run(args);
 	}
 
 }

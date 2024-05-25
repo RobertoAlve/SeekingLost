@@ -10,13 +10,16 @@ public class UserResponse implements Response {
 
     private String username;
 
+    private String id;
+
     private Integer statusCode;
 
     public UserResponse() { }
 
-    public UserResponse(String username, Integer statusCode) {
+    public UserResponse(String username, Integer statusCode, String id) {
         this.username = username;
         this.statusCode = statusCode;
+        this.id = id;
     }
 
 }

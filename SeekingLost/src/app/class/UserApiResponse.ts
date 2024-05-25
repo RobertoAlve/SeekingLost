@@ -14,7 +14,8 @@ export class UserApiResponse {
         if (Object.prototype.hasOwnProperty.call(error.error?.status, key)) {
           status[key] = {
             username: error.error?.status[key].username || errorMessage,
-            statusCode: error.error?.status[key].statusCode || 500
+            statusCode: error.error?.status[key].statusCode || 500,
+            id: error.error?.status[key].id || ""
           };
         }
       }
