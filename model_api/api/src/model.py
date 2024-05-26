@@ -59,6 +59,11 @@ class Model:
                 file_name = os.path.join(f'temp_imgs/{token}', os.path.basename(key))
                 self._download_from_s3(bucket_name, key, file_name)
 
+    def _save_img(self, img, token):
+        _, buffer = cv2.imencode('.jpg', img)
+        img_bytes = buffer.tobytes()
+        self.s3.put_object(Bucket='seekinglost-results', Key=token, Body=img_bytes, ContentType='image/jpeg')
+
     def predict(self, token):
         self._get_imgs(token)
         files = os.listdir(f'temp_imgs/{token}')
@@ -75,6 +80,9 @@ class Model:
                 id = self.names[id]
                 result.append({'ID':id, 
                                'CONFIDENCE':round(100 - confidence)})
+                cv2.putText(img, str(id), (x + 5, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                cv2.putText(img, str(confidence), (x + 5, y + h - 5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 1)
+                self._save_img(img)
 
         shutil.rmtree(f'temp_imgs/{token}')
         return result
