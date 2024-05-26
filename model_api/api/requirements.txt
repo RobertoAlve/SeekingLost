@@ -2,4 +2,4 @@ boto3
 pillow
 fastapi
 uvicorn
-opencv-python
+opencv_contrib_python

@@ -1,25 +1,21 @@
 """
 This is the module to host the api calls
 """
-import io
-from PIL import Image
 from src.model import Model
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI
 
 app = FastAPI()
 model = Model()
 
-@app.get("/predict/")
-async def predict(file: UploadFile = File(...)) -> (tuple | None):
+@app.get("/predict/{token}")
+async def predict(token:str) -> list:
     """
         API to get the model prediction
 
         Args:
-        - file (File): image of a person  
+        - token (str): token of the image path in s3  
 
         Returns:
             tuple: returns the prediction of the model, id and confidence  
     """
-    contents = await file.read()
-    img = Image.open(io.BytesIO(contents))
-    return model.predict(img)
+    return model.predict(token)
