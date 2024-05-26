@@ -72,7 +72,7 @@ public class ImageController {
     @GetMapping("/results/{token}")
     private ResponseEntity<UriResponse> getResults(@PathVariable String token) {
         List<String> uris = new ArrayList<>();
-        List<URL> urls = s3ImageService.getUrlsImagesFromDirectory(token);
+        List<URL> urls = s3ImageService.getResults(token);
         AtomicBoolean convertError = new AtomicBoolean(false);
 
         urls.forEach(url -> {
