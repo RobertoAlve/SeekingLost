@@ -45,8 +45,8 @@ export class LoginComponent {
               let titleModal, messageModal;
 
               if ( resultVerify ) {
-                titleModal = "Sucesso..."
-                messageModal = "Login efetuado com Sucesso..."
+                titleModal = "Sucesso"
+                messageModal = "Login efetuado com Sucesso!"
                 sessionStorage.setItem("userId", data.status[key].id);
                 this.router.navigate(['/home']);
               } else {

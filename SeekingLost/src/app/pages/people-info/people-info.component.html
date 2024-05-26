@@ -1,0 +1,61 @@
+<main>
+    <div class="container-main">
+        <div class="left-options">
+            <div class="people-name">   
+                <div class="people-image" [ngStyle]="{backgroundImage: 'url(' + imagePath[0] + ')'}"></div>
+                <h1>{{ peopleName }}</h1>
+            </div>
+
+            <div class="options" (click)="handleClick($event)">
+                <div class="title active">
+                    <div class="circle" ></div>
+                    Imagens cadastradas
+                </div>
+                <div class="title">                    
+                    <div class="circle"></div>
+                    Resultados
+                </div>
+            </div>
+        </div>
+        <div class="images" *ngIf="!changeView; else results">
+            <div class="container-people-images">
+                <div *ngFor="let image of imagesPeople">
+                    <app-card-default-image imagePath="{{ image }}"></app-card-default-image>
+                </div>
+                <app-card-default-image (click)="uploadImage()" [newImage]="true"></app-card-default-image>
+            </div>
+        </div>
+        <ng-template #results>
+            <div class="images" *ngIf="!uploadImages; else importImages">
+                <div class="container-people-images results">
+                    <div *ngFor="let result of resultsPeople">
+                        {{ result }}
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #importImages>
+            <div class="images upload">
+                <div id="drop-area" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+                    <div class="main-import-images">
+                        <div class="icon-import">
+                            <mat-icon>cloud_upload</mat-icon>
+                            <p>Arraste e solte as imagens</p>
+                            <button class="import-button" (click)="triggerInput()">Importar</button>
+                        </div>
+                        <div class="list-files">
+                            <ul>
+                                <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <input type="file" id="file-input" accept="image/*" multiple style="display: none;" (change)="onFilesSelected($event)" />
+                </div>
+                <div class="buttons-form">
+                    <app-button (buttonClicked)="handleButtonClick($event)" idButton="cancel" buttonText="Cancelar" textColor="#BDBCBC"></app-button>
+                    <app-button (buttonClicked)="handleButtonClick($event)" idButton="sendImage" buttonText="Finalizar" buttonColor="#7B6CDB" buttonType="submit"></app-button>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</main>

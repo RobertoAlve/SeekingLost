@@ -4,14 +4,16 @@ import br.com.seekinglost.api.interfaces.Response;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class UriResponse implements Response {
 
-    private String uri;
+    private List<String> uris;
 
-    public UriResponse(String uri) {
-        this.uri = uri;
+    public UriResponse(List<String> uris) {
+        this.uris = uris;
     }
 
 }

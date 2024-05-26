@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ImageService } from '../../services/image-service/image.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-people-card',
@@ -10,19 +11,20 @@ export class PeopleCardComponent {
   @Input() peopleName: String = "Default"
   @Input() isNewCard: boolean = false;
   @Input() peopleToken: String = "";
-  imagePath: String = "";
-  backgroundColor: string = "#EDEDED";
+  imagePath: String[] = [""];
+  backgroundColor: string = "#515151";
 
-  constructor(private imageService: ImageService) { }
+  constructor(private imageService: ImageService, private router: Router) { }
 
   ngOnInit() {
     if (this.isNewCard) {
       this.peopleName = "Novo";
-      this.imagePath = "";
+      this.imagePath = [""];
     } else {
       this.imageService.getFirstImage(this.peopleToken).subscribe({
         next: (data: any) => {
-          this.imagePath = data.uri;
+          console.log(data)
+          this.imagePath = data.uris;
         },
         error: (error: any) => {
           console.error(error);

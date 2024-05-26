@@ -26,6 +26,14 @@ export class ImageService implements IImageService {
     return this.httpClient.get<String>(this.finalEndpoint + "/" + token);
   }
 
+  getAllImages(token: String): Observable<String[]> {
+    return this.httpClient.get<String[]>(this.finalEndpoint + "/all-images" + "/" + token)
+  }
+
+  getResults(token: String): Observable<String[]> {
+    return this.httpClient.get<String[]>(this.finalEndpoint + "/results" + "/" + token)
+  }
+
   saveImages(files: File[], token: String): Observable<ImageApiResponse> {
     const formData = new FormData()
 
@@ -36,4 +44,8 @@ export class ImageService implements IImageService {
     return this.httpClient.post<ImageApiResponse>(this.finalEndpoint + "/upload/" + token, formData);
   }
 
+  deleteImage(uri: string): Observable<ImageApiResponse> {
+    console.log("Oiii")
+    return this.httpClient.delete<ImageApiResponse>(this.finalEndpoint,  { params: { uri } });
+  }
 }

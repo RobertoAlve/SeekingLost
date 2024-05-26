@@ -30,4 +30,7 @@ export class RegisterLostPeopleComponent {
     this.router.navigate(['/register-lost-people/form']);
   }
 
+  openInfo(peopleName: String, token: String) {
+    this.router.navigate(['/register-lost-people/people-info'], { state: { peopleName: peopleName, token: token } });
+  }
 }
