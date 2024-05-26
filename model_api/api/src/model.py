@@ -82,7 +82,7 @@ class Model:
                                'CONFIDENCE':round(100 - confidence)})
                 cv2.putText(img, str(id), (x + 5, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
                 cv2.putText(img, str(confidence), (x + 5, y + h - 5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 1)
-                self._save_img(img)
+                self._save_img(img, token)
 
         shutil.rmtree(f'temp_imgs/{token}')
         return result
