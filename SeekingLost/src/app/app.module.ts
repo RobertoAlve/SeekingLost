@@ -16,6 +16,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalModule as ModalAlertModule } from './components/modal/shared.module';
 import { LoadingInterceptor } from './loading.interceptor';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { PeopleInfoModule } from './pages/people-info/people-info.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     AboutModule,
     RegisterLostPeopleModule,
     FormRegisterPeopleModule,
+    PeopleInfoModule,
     HeaderModule,
     FooterModule,
     HttpClientModule,

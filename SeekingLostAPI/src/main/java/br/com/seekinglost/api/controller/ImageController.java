@@ -13,6 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @RestController
@@ -25,11 +31,69 @@ public class ImageController {
     @GetMapping("/{token}")
     private ResponseEntity<UriResponse> getImageForUser(@PathVariable String token) {
         try {
-            return ResponseEntity.ok().body(new UriResponse(s3ImageService.getUrlFirstImageFromDirectory(token).toURI().toString()));
+            return ResponseEntity.ok().body(new UriResponse(
+                    new ArrayList<>(Collections.singletonList(
+                            s3ImageService.getUrlFirstImageFromDirectory(token).toURI().toString()
+                    ))
+            ));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/all-images/{token}")
+    private ResponseEntity<UriResponse> getImagesForUser(@PathVariable String token) {
+        List<String> uris = new ArrayList<>();
+        List<URL> urls = s3ImageService.getUrlsImagesFromDirectory(token);
+        AtomicBoolean convertError = new AtomicBoolean(false);
+
+        urls.forEach(url -> {
+            try {
+                uris.add(url.toURI().toString());
+            } catch (URISyntaxException e) {
+                log.error(e.getMessage(), e);
+                convertError.set(true);
+            }
+        });
+
+        if (convertError.get())
+            return ResponseEntity.badRequest().build();
+
+        try {
+            return ResponseEntity.ok().body(new UriResponse(new ArrayList<>(uris)));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseEntity.badRequest().build();
+        }
+
+    }
+
+    @GetMapping("/results/{token}")
+    private ResponseEntity<UriResponse> getResults(@PathVariable String token) {
+        List<String> uris = new ArrayList<>();
+        List<URL> urls = s3ImageService.getUrlsImagesFromDirectory(token);
+        AtomicBoolean convertError = new AtomicBoolean(false);
+
+        urls.forEach(url -> {
+            try {
+                uris.add(url.toURI().toString());
+            } catch (URISyntaxException e) {
+                log.error(e.getMessage(), e);
+                convertError.set(true);
+            }
+        });
+
+        if (convertError.get())
+            return ResponseEntity.badRequest().build();
+
+        try {
+            return ResponseEntity.ok().body(new UriResponse(new ArrayList<>(uris)));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @PostMapping("/upload/{token}")
@@ -57,4 +121,19 @@ public class ImageController {
             return ResponseEntity.ok().body(response);
     }
 
+    @DeleteMapping
+    private ResponseEntity<ImageApiResponse> deleteImage(@RequestParam String uri) {
+        ImageApiResponse response = new ImageApiResponse();
+
+        try {
+            s3ImageService.deleteImageByUri(uri);
+        } catch (URISyntaxException e) {
+            response.addStatus(ImageResponseEnum.ERROR_DELETE, new ImageResponse(ImageResponseEnum.ERROR_DELETE.getMessage()));
+        }
+
+        if (response.hasError())
+            return ResponseEntity.badRequest().body(response);
+        else
+            return ResponseEntity.ok().body(response);
+    }
 }

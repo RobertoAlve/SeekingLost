@@ -3,7 +3,7 @@
         <h1>Pessoas Cadastradas</h1>
         <div class="container-people-cards">
             <div *ngFor="let person of lostPersons">
-                <app-people-card [peopleName]="person.firstName" [peopleToken]="person.token"></app-people-card>
+                <app-people-card (click)="openInfo(person.firstName, person.token)" [peopleName]="person.firstName" [peopleToken]="person.token"></app-people-card>
             </div>
             <app-people-card (click)="newRegister()" [isNewCard]="true"></app-people-card>
         </div>

@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -51,6 +54,14 @@ public class S3ImageService {
         s3client.deleteObject(request);
     }
 
+    public void deleteImageByUri(String uri) throws URISyntaxException {
+        URI s3Uri = new URI(uri);
+        String bucketName = s3Uri.getHost().split("\\.")[0];
+        String keyName = s3Uri.getPath().substring(1);
+
+        deleteImage(keyName);
+    }
+
     public S3Object getFirstImageFromDirectory(String directoryPath) {
         ListObjectsV2Request request = new ListObjectsV2Request()
                 .withBucketName(bucketName)
@@ -83,5 +94,45 @@ public class S3ImageService {
 
         String firstImageKey = objects.getFirst().getKey();
         return s3client.getUrl(bucketName, firstImageKey);
+    }
+
+    public List<URL> getUrlsImagesFromDirectory(String directoryPath) {
+        List<URL> urls = new ArrayList<>();
+        ListObjectsV2Request request = new ListObjectsV2Request()
+                .withBucketName(bucketName)
+                .withPrefix(directoryPath + "/");
+
+        ListObjectsV2Result objectListing = s3client.listObjectsV2(request);
+        List<S3ObjectSummary> objects = objectListing.getObjectSummaries();
+
+        if (objects.isEmpty()) {
+            throw new RuntimeException("No images found in the directory.");
+        }
+
+        objects.forEach(obj -> {
+            urls.add(s3client.getUrl(bucketName, obj.getKey()));
+        });
+
+        return urls;
+    }
+
+    public List<URL> getResults(String directoryPath) {
+        List<URL> urls = new ArrayList<>();
+        ListObjectsV2Request request = new ListObjectsV2Request()
+                .withBucketName("results")
+                .withPrefix(directoryPath + "/");
+
+        ListObjectsV2Result objectListing = s3client.listObjectsV2(request);
+        List<S3ObjectSummary> objects = objectListing.getObjectSummaries();
+
+        if (objects.isEmpty()) {
+            throw new RuntimeException("No images found in the directory.");
+        }
+
+        objects.forEach(obj -> {
+            urls.add(s3client.getUrl(bucketName, obj.getKey()));
+        });
+
+        return urls;
     }
 }

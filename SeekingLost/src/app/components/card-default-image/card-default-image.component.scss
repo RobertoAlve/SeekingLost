@@ -1,0 +1,53 @@
+.container-image {
+    width: 65px;
+    height: 65px;
+    position: relative;
+    margin: 12px;
+}
+
+.container-image:hover {
+    .delete-icon {
+        visibility: visible;
+    }
+}
+
+.image {
+    width: 65px;
+    height: 65px;
+    border-radius: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.delete-icon {
+    visibility: hidden;
+    width: 30px;
+    height: 30px;
+    background-color: #D9D9D9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    border-radius: 100%;
+    top: -10px;
+    right: -20px;
+    cursor: pointer;
+}
+
+.delete-icon mat-icon {
+    color: rgb(235, 88, 88);
+}
+
+.add-image {
+    width: 100%;
+    color: #fff;
+    height: 100%;
+    display: flex;
+    font-size: 35px;
+    align-items: center;
+    justify-content: center;
+    background-color: #515151;
+    border-radius: 100%;
+    cursor: pointer;
+}

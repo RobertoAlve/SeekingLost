@@ -7,4 +7,7 @@ export interface IImageService {
 
     getFirstImage(token: String): Observable<String>;
 
+    getAllImages(token: String): Observable<String[]>;
+
+    deleteImage(uri: string): Observable<ImageApiResponse>;
 }
