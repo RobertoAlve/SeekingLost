@@ -17,7 +17,7 @@ class Model:
     def _get_names(self):
         self._check_dir('file_name')
         self._download_from_s3('seekinglost-modelos', 'person-names/names.txt', 'file_name/names.txt')
-        with open('file_name/names.txt', 'r', encoding='utf-8') as file:
+        with open('file_name/names.txt', 'r', encoding='latin-1') as file:
             lines = file.readlines()
             lines = [line.strip() for line in lines]
         return lines
