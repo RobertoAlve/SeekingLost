@@ -27,7 +27,9 @@ export class PeopleInfoComponent implements OnInit {
               private renderer: Renderer2,
               private router: Router,
               private modalServive: ModalService) 
-  {
+  { }
+
+  ngOnInit() {
     const navigation = this.router.getCurrentNavigation();
     if (navigation != null) {
       const state = navigation.extras.state as { peopleName: string, token: string };
@@ -37,9 +39,7 @@ export class PeopleInfoComponent implements OnInit {
         console.log(this.peopleName)
       }
     }
-  }
 
-  ngOnInit() {
     this.imageService.getFirstImage(this.token).subscribe({
       next: (data: any) => {
         this.imagePath = data.uris;
