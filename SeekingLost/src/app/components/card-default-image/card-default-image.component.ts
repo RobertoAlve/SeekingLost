@@ -49,12 +49,12 @@ export class CardDefaultImageComponent {
   }
 
   downloadImage(url: string): void {
-    if (this.delete == false) {
+    if (this.delete == false && this.newImage == false) {
       this.http.get(url, { responseType: 'blob' }).subscribe((blob: Blob) => {
         const a = document.createElement('a');
         const objectUrl = URL.createObjectURL(blob);
         a.href = objectUrl;
-        a.download = 'image-result.jpg'; // Você pode usar o nome original da imagem se disponível
+        a.download = 'image-result.jpg';
         a.click();
         URL.revokeObjectURL(objectUrl);
       }, error => {

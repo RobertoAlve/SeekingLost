@@ -64,6 +64,12 @@ class Model:
         _, buffer = cv2.imencode('.jpg', img)
         img_bytes = buffer.tobytes()
         self.s3.put_object(Bucket='seekinglost-results', Key=f'{token}/{uuid.uuid4()}', Body=img_bytes, ContentType='image/jpeg')
+        
+    def _delete_s3_directory(self, bucket_name, prefix):
+        objects = self.s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
+        if 'Contents' in objects:
+            delete_keys = {'Objects': [{'Key': obj['Key']} for obj in objects['Contents']]}
+            self.s3.delete_objects(Bucket=bucket_name, Delete=delete_keys)
 
     def predict(self, token):
         self._get_imgs(token)
@@ -83,6 +89,8 @@ class Model:
                                'CONFIDENCE':round(100 - confidence)})
                 cv2.putText(img, str(id), (x + 5, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
                 cv2.putText(img, str(confidence), (x + 5, y + h - 5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 1)
+                
+                self._delete_s3_directory('seekinglost-results', token)
                 self._save_img(img, token)
 
         shutil.rmtree(f'temp_imgs/{token}')
