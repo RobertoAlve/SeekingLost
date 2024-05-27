@@ -1,8 +1,8 @@
 <div class="container-image">
-    <div *ngIf="!newImage" class="delete-icon" (click)="deleteImage()">
+    <div *ngIf="delete" class="delete-icon" (click)="deleteImage()">
         <mat-icon>delete</mat-icon>
     </div>
-    <div class="image" [ngStyle]="{ backgroundImage: 'url(' + imagePath + ')' }">
+    <div class="image" [ngStyle]="{ backgroundImage: 'url(' + imagePath + ')' }" (click)="downloadImage(this.imagePath)">
         <ng-container *ngIf="newImage">
             <div class="add-image">+</div>
         </ng-container>

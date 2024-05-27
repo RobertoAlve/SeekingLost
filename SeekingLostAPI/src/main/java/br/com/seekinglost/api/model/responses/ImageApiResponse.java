@@ -27,14 +27,15 @@ public class ImageApiResponse implements IApiResponse {
 
     @Override
     public void addStatus(IResponseEnum responseEnum, String target) {
-        log.info("Method not implemented");
+        this.status.put(responseEnum, new ImageResponse(target));
     }
 
     @Override
     public boolean hasError() {
         AtomicBoolean hasError = new AtomicBoolean(false);
         this.status.forEach((responseEnum, imageResponse) -> {
-            if (Objects.equals(responseEnum.getStatusCode(), ImageResponseEnum.ERROR.getCode())) {
+            if (Objects.equals(responseEnum.getStatusCode(), ImageResponseEnum.ERROR.getCode()) ||
+                Objects.equals(responseEnum.getStatusCode(), ImageResponseEnum.ERROR_GET_URI.getCode())) {
                 hasError.set(true);
             }
         });

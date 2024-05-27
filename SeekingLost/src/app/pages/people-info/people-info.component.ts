@@ -62,7 +62,7 @@ export class PeopleInfoComponent implements OnInit {
     this.imageService.getResults(this.token).subscribe({
       next: (data: any) => {
         this.resultsPeople = data.uris;
-        console.log(this.resultsPeople)
+        console.log(this.resultsPeople[0])
       },
       error: (error: any) => {
         console.error(error);
@@ -173,6 +173,16 @@ export class PeopleInfoComponent implements OnInit {
 
         this.uploadImages = false;
         this.changeView = false;
+        
+        this.imageService.predictPeople(this.token).subscribe({
+          next: (data: any) => {
+            console.log("Predict disparado")
+          },
+          error: (error: any) => {
+            console.log("Predict error: " + error)
+          }
+        });
+
         this.router.navigate(['/register-lost-people']);
       },
       error: (error: any) => {
