@@ -9,6 +9,7 @@ import { ModalService } from '../../services/modal-service/modal-service.service
 import { TokenService } from '../../services/token-service/token.service';
 import { ImageService } from '../../services/image-service/image.service';
 import { ImageApiResponse } from '../../class/ImageApiResponse';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-form-register-people',
@@ -193,6 +194,15 @@ export class FormRegisterPeopleComponent {
           "Fotos cadastradas com sucesso!",
           "success"
         )
+        
+        this.imageService.predictPeople(this.personToken).subscribe({
+          next: (data: any) => {
+            console.log("Predict disparado")
+          },
+          error: (error: any) => {
+            console.log("Predict error: " + error)
+          }
+        });
         
         this.router.navigate(['/register-lost-people']);
       },

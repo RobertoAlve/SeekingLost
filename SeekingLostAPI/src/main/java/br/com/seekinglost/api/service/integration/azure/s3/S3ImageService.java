@@ -1,5 +1,7 @@
 package br.com.seekinglost.api.service.integration.azure.s3;
 
+import br.com.seekinglost.api.enums.ImageResponseEnum;
+import br.com.seekinglost.api.model.responses.ImageApiResponse;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class S3ImageService {
 
     @Value("${aws.bucket-name}")
     private String bucketName;
+
+    private String resultsBucketName = "seekinglost-results";
 
     @Autowired
     private AmazonS3 s3client;
@@ -116,21 +120,22 @@ public class S3ImageService {
         return urls;
     }
 
-    public List<URL> getResults(String directoryPath) {
+    public List<URL> getResults(String directoryPath, ImageApiResponse response) {
         List<URL> urls = new ArrayList<>();
         ListObjectsV2Request request = new ListObjectsV2Request()
-                .withBucketName("results")
+                .withBucketName(resultsBucketName)
                 .withPrefix(directoryPath + "/");
 
         ListObjectsV2Result objectListing = s3client.listObjectsV2(request);
         List<S3ObjectSummary> objects = objectListing.getObjectSummaries();
 
         if (objects.isEmpty()) {
-            throw new RuntimeException("No images found in the directory.");
+            response.addStatus(ImageResponseEnum.ERROR_GET_URI, "No images found in the directory.");
+            return null;
         }
 
         objects.forEach(obj -> {
-            urls.add(s3client.getUrl(bucketName, obj.getKey()));
+            urls.add(s3client.getUrl(resultsBucketName, obj.getKey()));
         });
 
         return urls;

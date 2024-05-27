@@ -11,6 +11,7 @@ import { ImageApiResponse } from '../../class/ImageApiResponse';
 export class ImageService implements IImageService {
   private environment = environment;
   private finalEndpoint = environment.API_ENDPOINT + "/image"
+  private finalEndpointPy = environment.API_PYTHON + "/predict"
 
   httpOptions = {
     headers: new HttpHeaders(
@@ -27,11 +28,15 @@ export class ImageService implements IImageService {
   }
 
   getAllImages(token: String): Observable<String[]> {
-    return this.httpClient.get<String[]>(this.finalEndpoint + "/all-images" + "/" + token)
+    return this.httpClient.get<String[]>(this.finalEndpoint + "/all-images" + "/" + token);
   }
 
   getResults(token: String): Observable<String[]> {
-    return this.httpClient.get<String[]>(this.finalEndpoint + "/results" + "/" + token)
+    return this.httpClient.get<String[]>(this.finalEndpoint + "/results" + "/" + token);
+  }
+
+  predictPeople(token: String): Observable<any> {
+    return this.httpClient.get<any>(this.finalEndpointPy + "/" + token);
   }
 
   saveImages(files: File[], token: String): Observable<ImageApiResponse> {

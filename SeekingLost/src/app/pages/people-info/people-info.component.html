@@ -22,14 +22,14 @@
                 <div *ngFor="let image of imagesPeople">
                     <app-card-default-image imagePath="{{ image }}"></app-card-default-image>
                 </div>
-                <app-card-default-image (click)="uploadImage()" [newImage]="true"></app-card-default-image>
+                <app-card-default-image (click)="uploadImage()" [newImage]="true" [delete]="false"></app-card-default-image>
             </div>
         </div>
         <ng-template #results>
             <div class="images" *ngIf="!uploadImages; else importImages">
                 <div class="container-people-images results">
                     <div *ngFor="let result of resultsPeople">
-                        {{ result }}
+                        <app-card-default-image imagePath="{{ result }}" [delete]="false"></app-card-default-image>
                     </div>
                 </div>
             </div>

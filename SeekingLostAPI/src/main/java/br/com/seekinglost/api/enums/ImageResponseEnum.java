@@ -7,7 +7,9 @@ import lombok.Getter;
 public enum ImageResponseEnum implements IResponseEnum {
     ERROR("Error upload images!", 0),
     UPLOAD("Success upload images!", 1),
-    ERROR_DELETE("Error in delete image!", 2);
+    ERROR_DELETE("Error in delete image!", 2),
+    ERROR_DOWNLOAD("Error in download image!", 3),
+    ERROR_GET_URI("Error get image!", 4);
 
     private final String message;
 

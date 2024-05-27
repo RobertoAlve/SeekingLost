@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core'
 import { ImageService } from '../../services/image-service/image.service';
 import { ImageApiResponse } from '../../class/ImageApiResponse';
 import { ModalService } from '../../services/modal-service/modal-service.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-card-default-image',
@@ -11,8 +12,11 @@ import { ModalService } from '../../services/modal-service/modal-service.service
 export class CardDefaultImageComponent {
   @Input() imagePath: string = "";
   @Input() newImage: boolean = false;
+  @Input() delete: boolean = true;
 
-  constructor(private imageService: ImageService, private modalService: ModalService) { }
+  constructor(private imageService: ImageService, 
+              private modalService: ModalService,
+              private http: HttpClient) { }
 
   deleteImage() {
     this.imageService.deleteImage(this.imagePath).subscribe({
@@ -42,5 +46,20 @@ export class CardDefaultImageComponent {
         )
       }
     });
+  }
+
+  downloadImage(url: string): void {
+    if (this.delete == false) {
+      this.http.get(url, { responseType: 'blob' }).subscribe((blob: Blob) => {
+        const a = document.createElement('a');
+        const objectUrl = URL.createObjectURL(blob);
+        a.href = objectUrl;
+        a.download = 'image-result.jpg'; // Você pode usar o nome original da imagem se disponível
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+      }, error => {
+        console.error('Download error:', error);
+      });
+    }
   }
 }

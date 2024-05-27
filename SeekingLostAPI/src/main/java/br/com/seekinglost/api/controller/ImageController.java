@@ -71,9 +71,13 @@ public class ImageController {
 
     @GetMapping("/results/{token}")
     private ResponseEntity<UriResponse> getResults(@PathVariable String token) {
+        ImageApiResponse response = new ImageApiResponse();
         List<String> uris = new ArrayList<>();
-        List<URL> urls = s3ImageService.getResults(token);
+        List<URL> urls = s3ImageService.getResults(token, response);
         AtomicBoolean convertError = new AtomicBoolean(false);
+
+        if (response.hasError())
+            return ResponseEntity.badRequest().body(new UriResponse(Collections.singletonList("Not found images!")));
 
         urls.forEach(url -> {
             try {
