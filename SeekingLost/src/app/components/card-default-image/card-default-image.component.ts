@@ -3,6 +3,7 @@ import { ImageService } from '../../services/image-service/image.service';
 import { ImageApiResponse } from '../../class/ImageApiResponse';
 import { ModalService } from '../../services/modal-service/modal-service.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-default-image',
@@ -16,7 +17,8 @@ export class CardDefaultImageComponent {
 
   constructor(private imageService: ImageService, 
               private modalService: ModalService,
-              private http: HttpClient) { }
+              private http: HttpClient,
+              private router: Router) { }
 
   deleteImage() {
     this.imageService.deleteImage(this.imagePath).subscribe({
@@ -26,7 +28,8 @@ export class CardDefaultImageComponent {
           "Imagem excluida!",
           "success"
         )
-        window.location.reload();
+
+        this.router.navigate(['/register-lost-people']);
       },
       error: (error: any) => {
         const errorResponse = ImageApiResponse.fromError(error);
