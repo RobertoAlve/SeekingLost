@@ -5,6 +5,7 @@ import os
 import cv2
 import boto3
 import shutil
+import uuid
 
 
 class Model:
@@ -62,7 +63,7 @@ class Model:
     def _save_img(self, img, token):
         _, buffer = cv2.imencode('.jpg', img)
         img_bytes = buffer.tobytes()
-        self.s3.put_object(Bucket='seekinglost-results', Key=token, Body=img_bytes, ContentType='image/jpeg')
+        self.s3.put_object(Bucket='seekinglost-results', Key=f'{token}/{uuid.uuid4()}', Body=img_bytes, ContentType='image/jpeg')
 
     def predict(self, token):
         self._get_imgs(token)
