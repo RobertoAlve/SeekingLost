@@ -27,17 +27,30 @@ export class PeopleInfoComponent implements OnInit {
               private renderer: Renderer2,
               private router: Router,
               private modalServive: ModalService) 
-  { }
-
-  ngOnInit() {
+  {
     const navigation = this.router.getCurrentNavigation();
     if (navigation != null) {
       const state = navigation.extras.state as { peopleName: string, token: string };
       if (state) {
         this.peopleName = state.peopleName;
+        sessionStorage.setItem("infoPeopleName", this.peopleName)
+
         this.token = state.token;
-        console.log(this.peopleName)
+        sessionStorage.setItem("infoPeopleToken", this.token)
       }
+    }
+  }
+
+  ngOnInit() {
+    var infoPeopleName = sessionStorage.getItem("infoPeopleName")
+    var infoPeopleToken = sessionStorage.getItem("infoPeopleToken")
+    
+    if (infoPeopleName != null && infoPeopleName != "") {
+      this.peopleName = infoPeopleName;
+    }
+
+    if (infoPeopleToken != null && infoPeopleToken != "") {
+      this.token = infoPeopleToken;
     }
 
     this.imageService.getFirstImage(this.token).subscribe({
