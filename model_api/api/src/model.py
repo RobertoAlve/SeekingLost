@@ -2,10 +2,12 @@
     This module contais a class of a model with the necessary funtions to make the prediction
 """
 import os
+import uuid
+
 import cv2
 import boto3
 import shutil
-import uuid
+import numpy as np
 
 
 class Model:
@@ -42,7 +44,10 @@ class Model:
         return cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
     def _detec_faces(self, img):
-        return self.face_detector.detectMultiScale(img, scaleFactor=2.4, minNeighbors=5, minSize=(30, 30))
+        for i in np.arange(1.1, 20.0, 0.1):
+            faces = self.face_detector.detectMultiScale(img, scaleFactor=i, minNeighbors=5, minSize=(65, 65))
+            if len(faces) > 0:
+                return faces
 
     def _check_dir(self, directory):
         if not os.path.exists(directory):
