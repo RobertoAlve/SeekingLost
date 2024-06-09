@@ -4,6 +4,6 @@
         <li><a routerLink="/register-lost-people" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Cadastrar</a></li>
         <li><app-logo></app-logo></li>
         <li><a routerLink="/about" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Sobre</a></li>
-        <li><a routerLink="/login">Sair</a></li>
+        <li><a routerLink="/login" (click)="onClickLogoff()" id="logoff">Sair</a></li>
     </ul>
 </header>
