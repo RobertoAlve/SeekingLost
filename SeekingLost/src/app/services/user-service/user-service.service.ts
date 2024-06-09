@@ -32,6 +32,10 @@ export class UserService implements IUserService {
     return this.httpClient.post<UserApiResponse>(this.finalEndpoint + "/login", JSON.stringify(user), this.httpOptions);
   }
 
+  logoffUser(username: String | null): Observable<UserApiResponse> {
+    return this.httpClient.post<UserApiResponse>(this.finalEndpoint + `/logoff?username=${username}`, this.httpOptions);
+  }
+
   handleError(error: HttpErrorResponse) {
     let errorMessage = '';
   
