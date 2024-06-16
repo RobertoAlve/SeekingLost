@@ -1,0 +1,8 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+model/predict/*.jpeg
+model/predict/*.jpg
+model/predict/*.webp
+model/predict/images/*
+model/predict/processed_images/*
+model/predict/trainer/*
