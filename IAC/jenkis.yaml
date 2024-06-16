@@ -1,0 +1,50 @@
+  AWSTemplateFormatVersion: "2010-09-09"
+  Transform: AWS::Serverless-2016-10-31
+
+  Resources:
+    SGInstanceJenkis:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: Jenkis machine, allow ports 22 and 8080
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: '22'
+            ToPort: '22'
+            CidrIp: 0.0.0.0/0
+          - IpProtocol: tcp
+            FromPort: '8080'
+            ToPort: '8080'
+            CidrIp: 0.0.0.0/0
+        VpcId: 'vpc-0f3bcc62a7f424c68'
+
+    InstanceJenkis:
+      Type: AWS::EC2::Instance
+      Properties:
+        ImageId: ami-09d3b3274b6c5d4aa
+        KeyName: key-front-back
+        InstanceType: t3.micro
+        SubnetId: 'subnet-09f5e36cd754ec49a'
+        UserData: 
+          Fn::Base64: 
+            !Sub |
+              #!/bin/bash
+              sudo yum update -y
+              sudo wget -O /etc/yum.repos.d/jenkins.repo \https://pkg.jenkins.io/redhat-stable/jenkins.repo
+              sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+              sudo yum upgrade
+              sudo yum install java-17-amazon-corretto -y
+              sudo yum install jenkins -y
+              sudo systemctl enable jenkins
+              sudo systemctl start jenkins
+              sudo systemctl status jenkins
+        SecurityGroupIds: 
+          - !Ref SGInstanceJenkis
+
+    ElasticIpJenkis:
+      Type: AWS::EC2::EIP
+
+    IpAssoc:
+      Type: AWS::EC2::EIPAssociation
+      Properties:
+        InstanceId: !Ref InstanceJenkis
+        AllocationId: !GetAtt ElasticIpJenkis.AllocationId

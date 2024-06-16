@@ -1,0 +1,51 @@
+  AWSTemplateFormatVersion: "2010-09-09"
+  Transform: AWS::Serverless-2016-10-31
+
+  Resources:
+    SGInstanceBackend:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: Backend Machine, allow ports 22, 80 and 8080
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: '22'
+            ToPort: '22'
+            CidrIp: 0.0.0.0/0
+          - IpProtocol: tcp
+            FromPort: '80'
+            ToPort: '80'
+            CidrIp: 0.0.0.0/0
+          - IpProtocol: tcp
+            FromPort: '8080'
+            ToPort: '8080'
+            CidrIp: 0.0.0.0/0
+        VpcId: 'vpc-0f3bcc62a7f424c68'
+
+    InstanceBackend:
+      Type: AWS::EC2::Instance
+      Properties:
+        ImageId: ami-080e1f13689e07408
+        InstanceType: t3.small
+        SubnetId: 'subnet-09f5e36cd754ec49a'
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash
+            sudo apt update && sudo apt upgrade -y
+            sudo apt-get install  curl apt-transport-https ca-certificates software-properties-common -y
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+            yes | sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+            sudo apt update
+            apt-cache policy docker-ce
+            sudo apt install docker-ce -y
+            sudo systemctl start docker
+        SecurityGroupIds: 
+          - !Ref SGInstanceBackend
+
+    ElasticIpDataIntegration:
+      Type: AWS::EC2::EIP
+
+    IpAssoc:
+      Type: AWS::EC2::EIPAssociation
+      Properties:
+        InstanceId: !Ref InstanceBackend
+        AllocationId: !GetAtt ElasticIpDataIntegration.AllocationId
