@@ -2,7 +2,7 @@ FROM azul/zulu-openjdk:22.0.1-jdk
 
 WORKDIR /app
 
-ENV SPRING_DATASOURCE_URL=jdbc:mysql://ec2-44-211-99-73.compute-1.amazonaws.com:3306/seekinglost
+ENV SPRING_DATASOURCE_URL=jdbc:mysql://ec2-54-162-148-69.compute-1.amazonaws.com:3306/seekinglost
 ENV SPRING_DATASOURCE_USERNAME=root
 ENV SPRING_DATASOURCE_PASSWORD=urubu100
 
