@@ -75,7 +75,8 @@ class Model:
     def _preprocess_image(self, image_path):
         """Aplica pré-processamento básico à imagem"""
         img = load_img(image_path, target_size=(224, 224))
-        img_array = img_to_array(img)
+        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img_array = img_to_array(img_rgb)
         return img_array.astype('uint8')
 
     def _check_dir(self, directory):
@@ -147,9 +148,10 @@ class Model:
 
         for file in files:
             image_original = cv2.imread(f'temp_imgs/{token}/{file}')
+            image_original_rgb = cv2.cvtColor(image_original, cv2.COLOR_BGR2RGB)
             img = self._preprocess_image(f'temp_imgs/{token}/{file}')
             faces = self._extract_faces(img)
-            boxes = self._get_boxes_from_image(image_original)
+            boxes = self._get_boxes_from_image(image_original_rgb)
 
             if not faces:
                 print(f"Not found face for {f'temp_imgs/{token}/{file}'}")
@@ -169,10 +171,10 @@ class Model:
 
                 if boxes:
                     for (x, y, width, height) in boxes:
-                        cv2.rectangle(image_original, (x, y), (x+width, y+height), (0, 255, 0), 2)
-                        cv2.putText(image_original, predicted_class, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+                        cv2.rectangle(image_original_rgb, (x, y), (x+width, y+height), (0, 255, 0), 2)
+                        cv2.putText(image_original_rgb, predicted_class, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
                 
-                self._save_img(cv2.cvtColor(image_original, cv2.COLOR_BGR2RGB), token)
+                self._save_img(image_original_rgb, token)
 
         shutil.rmtree(f'temp_imgs/{token}')
         return result
