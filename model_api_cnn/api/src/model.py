@@ -69,6 +69,8 @@ class Model:
             x, y, width, height = result['box']
             x, y = abs(x), abs(y)
             boxes.append((x, y, width, height))
+        
+        return boxes
 
     def _preprocess_image(self, image_path):
         """Aplica pré-processamento básico à imagem"""
@@ -164,9 +166,10 @@ class Model:
                 most_frequent_class = Counter(all_predictions).most_common(1)[0][0]
                 predicted_class = self.names[most_frequent_class]
 
-                for (x, y, width, height) in boxes:
-                    cv2.rectangle(img, (x, y), (x+width, y+height), (0, 255, 0), 2)
-                    cv2.putText(img, predicted_class, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+                if boxes:
+                    for (x, y, width, height) in boxes:
+                        cv2.rectangle(img, (x, y), (x+width, y+height), (0, 255, 0), 2)
+                        cv2.putText(img, predicted_class, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
                 
                 self._save_img(img, token)
 
