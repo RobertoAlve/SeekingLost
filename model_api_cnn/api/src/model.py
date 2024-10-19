@@ -37,11 +37,11 @@ class Model:
         self._check_dir('trainer')
         self._download_from_s3(        
                                 bucket_name = 'seekinglost-modelos',
-                                object_name = 'trainer/trainer.yml',
-                                file_name = 'trainer/trainer.yml'
+                                object_name = 'trainer/trainer.h5',
+                                file_name = 'trainer/trainer.h5'
         )
         
-        return load_model('trainer/face_recognition0-dataset2.h5')
+        return load_model('trainer/trainer.h5')
     
     def _get_detector(self):
         return MTCNN()
