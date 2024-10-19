@@ -149,7 +149,7 @@ class Model:
             image_original = cv2.imread(f'temp_imgs/{token}/{file}')
             img = self._preprocess_image(f'temp_imgs/{token}/{file}')
             faces = self._extract_faces(img)
-            boxes = self._get_boxes_from_image(img)
+            boxes = self._get_boxes_from_image(image_original)
 
             if not faces:
                 print(f"Not found face for {f'temp_imgs/{token}/{file}'}")
