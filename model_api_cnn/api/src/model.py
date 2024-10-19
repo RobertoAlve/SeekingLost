@@ -146,6 +146,7 @@ class Model:
         result = []
 
         for file in files:
+            image_original = cv2.imread(f'temp_imgs/{token}/{file}')
             img = self._preprocess_image(f'temp_imgs/{token}/{file}')
             faces = self._extract_faces(img)
             boxes = self._get_boxes_from_image(img)
@@ -168,10 +169,10 @@ class Model:
 
                 if boxes:
                     for (x, y, width, height) in boxes:
-                        cv2.rectangle(img, (x, y), (x+width, y+height), (0, 255, 0), 2)
-                        cv2.putText(img, predicted_class, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+                        cv2.rectangle(image_original, (x, y), (x+width, y+height), (0, 255, 0), 2)
+                        cv2.putText(image_original, predicted_class, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
                 
-                self._save_img(img, token)
+                self._save_img(cv2.cvtColor(image_original, cv2.COLOR_BGR2RGB), token)
 
         shutil.rmtree(f'temp_imgs/{token}')
         return result
