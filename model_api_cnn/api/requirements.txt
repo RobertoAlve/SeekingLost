@@ -1,10 +1,12 @@
 boto3==1.35.26
 fastapi==0.115.2
 keras==2.10.0
+Keras-Applications==1.0.8
+Keras-Preprocessing==1.1.2
+keras-vggface==0.6
 mtcnn==0.1.1
-numpy==2.1.2
 opencv_python==4.10.0.84
-Pillow==11.0.0
+pillow==10.4.0
 tensorboard==2.10.1
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
