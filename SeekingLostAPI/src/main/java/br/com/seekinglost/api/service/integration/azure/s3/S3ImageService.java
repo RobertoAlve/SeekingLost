@@ -23,7 +23,7 @@ public class S3ImageService {
     @Value("${aws.bucket-name}")
     private String bucketName;
 
-    private String resultsBucketName = "seekinglost-results";
+    private String resultsBucketName = "bucket-seekinglost-results";
 
     @Autowired
     private AmazonS3 s3client;
