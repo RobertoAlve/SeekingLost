@@ -5,5 +5,11 @@ mtcnn==0.1.1
 numpy==2.1.2
 opencv_python==4.10.0.84
 Pillow==11.0.0
+tensorboard==2.10.1
+tensorboard-data-server==0.6.1
+tensorboard-plugin-wit==1.8.1
+tensorflow==2.10.0
+tensorflow-estimator==2.10.0
+tensorflow-io-gcs-filesystem==0.31.0
 uvicorn
 setuptools 
