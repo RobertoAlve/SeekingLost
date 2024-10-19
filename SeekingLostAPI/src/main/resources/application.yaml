@@ -11,13 +11,13 @@ spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/seekinglost}
     username: ${SPRING_DATASOURCE_USERNAME:root}
-    password: ${SPRING_DATASOURCE_PASSWORD:20@FssA22}
+    password: ${SPRING_DATASOURCE_PASSWORD:pass}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 aws:
-  access-key: ${AWS_ACCESS_KEY:ASIAZBPGYG2GG7I2JO7Z}
-  secret-key: ${AWS_SECRET_KEY:vK5wH1M6k8MRYbLmlwHek0T/l0SadsPP41DM44p8}
-  session-token: ${AWS_SESSION_TOKEN:IQoJb3JpZ2luX2VjELf//////////wEaCXVzLXdlc3QtMiJHMEUCIFh7G/YvR+JpgBmgjPFYK/hlHGnv53LgVhV+rz2X6FRWAiEAn5JkaCikPhzS3YpR5GoeppNm62F3+Nc/8rVUEJFwFZkqqwIIIBABGgw2MjE2NDM1NzY5NzIiDJKGjQcnL2TCIVYXCSqIAvZ6Kn6V13ufQ8PVwmV61+0mkSbeV2LAu4FJj4arZQ1iAOjpH8nDDl7Gk4L9EZBTiSnRa2vXE5LmKdshmdg/XTEkXI+cKg9caXwUDodNtMlFtgwxp/gc8coD0nn0l/4lZW51FZqrc0rJaPFcf59SgS0ip5Zl5AVKDRSBhDQ2Xnvb/A6OA1WTwpARYL24CG3AKY6XojZPiZiGVWM/KkkbK5/m/slC0SY0ttZ71Z2Q0akPIX3TK6qADWilMxNX0YqDztxDH28NOvhpPrmXe+IV/SjhEcGQ+XccmZKZ/XfHPhF8DF0gcHtvhTZPCR53VmAjCZwe2B5tSW2tTLdhkeCH0KNId9LnsosPNzCmnPWxBjqdAY3xy51OhOjBTuixG9dKPCExvxh9Ea+/D+LranBsLFinOvdloChk2uXvLUlOX0H1/vD48Zp5tdVopbhk8IEIgEYik/Xdc5JWV5UWDhDMUI4bbVoKp6uSwmfAtW4g+O4121p6U8mEnrE/2wxbgmHsHso/eQsAo8os+Yw1qTHJjBZtS7hqw2/PNEGEzrZhwmDIVpBylrESCBh0vrLjT/c=}
-  region: ${AWS_REGION:us-east-1}
+  access-key: ${AWS_ACCESS_KEY}
+  secret-key: ${AWS_SECRET_KEY}
+  session-token: ${AWS_SESSION_TOKEN}
+  region: ${AWS_REGION}
   bucket-name: ${AWS_BUCKET_NAME:seekinglost-dados-treino-raw}
   use-credentials: ${USE_CREDENTIALS:true}
