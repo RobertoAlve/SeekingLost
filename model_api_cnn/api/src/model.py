@@ -70,7 +70,7 @@ class Model:
             x, y = abs(x), abs(y)
             boxes.append((x, y, width, height))
 
-    def _preprocess_image(image_path):
+    def _preprocess_image(self, image_path):
         """Aplica pré-processamento básico à imagem"""
         img = load_img(image_path, target_size=(224, 224))
         img_array = img_to_array(img)
