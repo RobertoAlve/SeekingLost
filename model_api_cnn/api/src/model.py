@@ -24,7 +24,7 @@ class Model:
 
     def _get_names(self):
         self._check_dir('file_name')
-        self._download_from_s3('seekinglost-modelos', 'person-names/names.txt', 'file_name/names.txt')
+        self._download_from_s3('bucket-seekinglost-modelos', 'person-names/names.txt', 'file_name/names.txt')
         with open('file_name/names.txt', 'r', encoding='latin-1') as file:
             lines = file.readlines()
             lines = [line.strip() for line in lines]
@@ -36,7 +36,7 @@ class Model:
     def _get_model(self):
         self._check_dir('trainer')
         self._download_from_s3(        
-                                bucket_name = 'seekinglost-modelos',
+                                bucket_name = 'bucket-seekinglost-modelos',
                                 object_name = 'trainer/trainer.h5',
                                 file_name = 'trainer/trainer.h5'
         )
@@ -82,7 +82,7 @@ class Model:
 
     def _get_imgs(self, token):
         self._check_dir(f'temp_imgs/{token}')
-        bucket_name = 'seekinglost-dados-treino-raw'
+        bucket_name = 'bucket-seekinglost-dados-treino-raw'
         objects = self.s3.list_objects_v2(Bucket=bucket_name, Prefix=token)
 
         for obj in objects['Contents']:
@@ -94,7 +94,7 @@ class Model:
     def _save_img(self, img, token):
         _, buffer = cv2.imencode('.jpg', img)
         img_bytes = buffer.tobytes()
-        self.s3.put_object(Bucket='seekinglost-results', Key=f'{token}/{uuid.uuid4()}', Body=img_bytes, ContentType='image/jpeg')
+        self.s3.put_object(Bucket='bucket-seekinglost-results', Key=f'{token}/{uuid.uuid4()}', Body=img_bytes, ContentType='image/jpeg')
         
     def _delete_s3_directory(self, bucket_name, prefix):
         objects = self.s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix)

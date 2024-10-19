@@ -30,5 +30,5 @@ async def predict(token:str) -> list:
             tuple: returns the prediction of the model, id and confidence  
     """
     
-    model._delete_s3_directory('seekinglost-results', token)
+    model._delete_s3_directory('bucket-seekinglost-results', token)
     return model.predict(token)

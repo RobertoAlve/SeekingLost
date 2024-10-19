@@ -19,5 +19,5 @@ aws:
   secret-key: ${AWS_SECRET_KEY}
   session-token: ${AWS_SESSION_TOKEN}
   region: ${AWS_REGION}
-  bucket-name: ${AWS_BUCKET_NAME:seekinglost-dados-treino-raw}
+  bucket-name: ${AWS_BUCKET_NAME:bucket-seekinglost-dados-treino-raw}
   use-credentials: ${USE_CREDENTIALS:true}
