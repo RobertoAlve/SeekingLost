@@ -76,8 +76,7 @@ class Model:
         """Aplica pré-processamento básico à imagem"""
         img = load_img(image_path, target_size=(224, 224))
         img_array = img_to_array(img)
-        img_rgb = cv2.cvtColor(img_array.astype('uint8'), cv2.COLOR_BGR2RGB)
-        return img_rgb
+        return img_array.astype('uint8')
 
     def _check_dir(self, directory):
         if not os.path.exists(directory):
@@ -151,7 +150,7 @@ class Model:
             image_original_rgb = cv2.cvtColor(image_original, cv2.COLOR_BGR2RGB)
             img = self._preprocess_image(f'temp_imgs/{token}/{file}')
             faces = self._extract_faces(img)
-            boxes = self._get_boxes_from_image(image_original_rgb)
+            boxes = self._get_boxes_from_image(image_original)
 
             if not faces:
                 print(f"Not found face for {f'temp_imgs/{token}/{file}'}")
