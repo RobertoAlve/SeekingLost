@@ -94,9 +94,16 @@ class Model:
                 self._download_from_s3(bucket_name, key, file_name)
 
     def _save_img(self, img, token):
-        _, buffer = cv2.imencode('.jpg', img)
+        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        _, buffer = cv2.imencode('.jpg', img_rgb)
         img_bytes = buffer.tobytes()
-        self.s3.put_object(Bucket='bucket-seekinglost-results', Key=f'{token}/{uuid.uuid4()}', Body=img_bytes, ContentType='image/jpeg')
+        
+        self.s3.put_object(
+            Bucket='bucket-seekinglost-results',
+            Key=f'{token}/{uuid.uuid4()}',
+            Body=img_bytes,
+            ContentType='image/jpeg'
+        )
         
     def _delete_s3_directory(self, bucket_name, prefix):
         objects = self.s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
@@ -172,6 +179,8 @@ class Model:
                     for (x, y, width, height) in boxes:
                         cv2.rectangle(image_original_rgb, (x, y), (x+width, y+height), (0, 255, 0), 2)
                         cv2.putText(image_original_rgb, predicted_class, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+                else:
+                    cv2.putText(image_original_rgb, predicted_class, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
                 
                 self._save_img(image_original_rgb, token)
 
