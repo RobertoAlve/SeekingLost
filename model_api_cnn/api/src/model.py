@@ -75,9 +75,9 @@ class Model:
     def _preprocess_image(self, image_path):
         """Aplica pré-processamento básico à imagem"""
         img = load_img(image_path, target_size=(224, 224))
-        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img_array = img_to_array(img_rgb)
-        return img_array.astype('uint8')
+        img_array = img_to_array(img)
+        img_rgb = cv2.cvtColor(img_array.astype('uint8'), cv2.COLOR_BGR2RGB)
+        return img_rgb
 
     def _check_dir(self, directory):
         if not os.path.exists(directory):
