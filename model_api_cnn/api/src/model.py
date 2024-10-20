@@ -163,6 +163,7 @@ class Model:
                 print(f"Not found face for {f'temp_imgs/{token}/{file}'}")
             else:
                 all_predictions = []
+                confidence_values = {} 
 
                 for i, face in enumerate(faces):
                     augmented_faces = self._augment_image(face)
@@ -170,10 +171,36 @@ class Model:
                         face_batch = np.expand_dims(aug_face, axis=0)
                         predictions = self.model.predict(face_batch)
                         predicted_class_index = np.argmax(predictions)
+                        confidence = predictions[0][predicted_class_index]
+                        confidence_value = confidence * 100
                         all_predictions.append(predicted_class_index)
+                        
+                        if predicted_class_index not in confidence_values:
+                            confidence_values[predicted_class_index] = []
+                        confidence_values[predicted_class_index].append(confidence_value)
 
-                most_frequent_class = Counter(all_predictions).most_common(1)[0][0]
-                predicted_class = self.names[most_frequent_class]
+                prediction_counts = Counter(all_predictions)
+
+                most_frequent_class = None
+                most_frequent_count = 0
+
+                for class_index, count in prediction_counts.items():
+                    if count > most_frequent_count:
+                        most_frequent_class = class_index
+                        most_frequent_count = count
+
+                if most_frequent_class is not None:
+                    confidences = confidence_values[most_frequent_class] 
+                    value_counts = Counter(confidences)
+
+                    most_common_value, most_common_count = value_counts.most_common(1)[0]
+
+                    if most_common_count <= 6:
+                        predicted_class = "Desconhecido"
+                    else:
+                        predicted_class = self.names[most_frequent_class]
+                else:
+                    print("Not found predictions for {f'temp_imgs/{token}/{file}'}")
 
                 if boxes:
                     for (x, y, width, height) in boxes:
